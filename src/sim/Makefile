@@ -70,7 +70,7 @@ endif
 ## BUILD RULES
 ##---------------------------------------------------------------------
 
-%.o:%.cpp
+%.o:%.cpp clock.sim.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 %.o:$(IMGUI_DIR)/%.cpp
@@ -85,7 +85,7 @@ all: clock.sim.cpp $(EXE)
 $(EXE): $(OBJS)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBS)
 
-clock.sim.cpp: ../bcd_counter.v ../clock.v ../bcd_decoder.v
+clock.sim.cpp: ../bcd_counter.v ../clock.v ../bcd_decoder.v ../ctrl.v
 	yosys proc.ys
 
 clean:

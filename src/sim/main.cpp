@@ -14,6 +14,7 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
+#include <iostream>
 #include "imgui.h"
 
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
@@ -45,54 +46,66 @@ class clock_model {
       top.p_i__clk.set(true);
       top.step();
 
-      m.unlock();
-    }
-
-
-    void sync() {
-      m.lock();
-
-      o_seg0 = top.p_o__seg0.get<unsigned char>();
-      o_seg1 = top.p_o__seg1.get<unsigned char>();
-      o_seg2 = top.p_o__seg2.get<unsigned char>();
-      o_seg3 = top.p_o__seg3.get<unsigned char>();
-      o_seg4 = top.p_o__seg4.get<unsigned char>();
-      o_seg5 = top.p_o__seg5.get<unsigned char>();
+      sr_logic();
 
       m.unlock();
     }
 
-    void i_set(bool v){
+    void i_set_m(bool v){
       m.lock();
-      top.p_i__set.set<bool>(v);
+      top.p_i__set__m.set<bool>(v);
       m.unlock();
     }
-    void i_up(bool v){
+    void i_set_h(bool v){
       m.lock();
-      top.p_i__up.set<bool>(v);
-      m.unlock();
-    }
-    void i_down(bool v){
-      m.lock();
-      top.p_i__down.set<bool>(v);
+      top.p_i__set__h.set<bool>(v);
       m.unlock();
     }
 
     int get_cycles() const { return cycles; }
 
   public:
-    unsigned char o_seg0;
-    unsigned char o_seg1;
-    unsigned char o_seg2;
-    unsigned char o_seg3;
-    unsigned char o_seg4;
-    unsigned char o_seg5;
+    unsigned char seg[6];
 
   private:
+    unsigned char sr_unlatch[6];
+
+    void sr_logic(){
+      static bool clk_r = false;
+      static bool latch_r = false;
+
+      
+      bool clk = top.p_o__clk.get<bool>();
+      bool latch = top.p_o__latch.get<bool>();
+      bool bit = top.p_o__bit.get<bool>();
+      
+      /* Rising latch */
+      if(latch & ~latch_r){
+        for(int i = 0; i < 6; i++){
+          seg[i] = sr_unlatch[i];
+        }
+      }
+
+      /* Rising clock */
+      if(clk & ~clk_r){
+        bool carry = bit;
+        for(int i = 0; i < (6); i++){
+          bool new_carry = sr_unlatch[i] & 0x80 ? 1 : 0;
+          sr_unlatch[i]  = (sr_unlatch[i] << 1) | carry;
+
+          carry = new_carry;
+        }
+      }
+
+      /* Used for edge detection */
+      clk_r = clk;
+      latch_r = latch;
+    }
+
     void thread_func(){
       while(true){
         step();
-        std::this_thread::sleep_for(std::chrono::milliseconds(8)); /* 125Hz */
+        std::this_thread::sleep_for(std::chrono::milliseconds(4)); /* 125Hz */
       }
     }
 
@@ -277,8 +290,6 @@ int main(int, char**)
         // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
         // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
         glfwPollEvents();
-        
-        d.sync();
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -287,40 +298,34 @@ int main(int, char**)
 
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
         {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("Clock Sim");                          // Create a window called "Hello, world!" and append into it.
 
             ImGui::Text("cycles: %u", d.get_cycles());
-            //ImGui::Text("time: %02x:%02x:%02x", d.o_hours,d.o_minutes,d.o_seconds);
-            
 
-            ImGui::Button("SET");
-            d.i_set(ImGui::IsItemActive());
-            ImGui::SameLine();
-            
-            ImGui::Button("UP");
-            d.i_up(ImGui::IsItemActive());
+            ImGui::Button("Set Min");
+            d.i_set_m(ImGui::IsItemActive());
             ImGui::SameLine();
 
-            ImGui::Button("DOWN");
-            d.i_down(ImGui::IsItemActive());
+            ImGui::Button("Set Hour");
+            d.i_set_h(ImGui::IsItemActive());
+            ImGui::End();
+
+            ImGui::Begin("Clock Display");                          // Create a window called "Hello, world!" and append into it.
 
             /* Print 7 segment displays */
-            e.print_segment(d.o_seg5, 0.5f);
+            e.print_segment(d.seg[0], 0.5f);
             ImGui::SameLine();
-            e.print_segment(d.o_seg4, 0.5f);
-            ImGui::SameLine();
-            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 40.0f);
-            e.print_segment(d.o_seg3, 0.5f);
-            ImGui::SameLine();
-            e.print_segment(d.o_seg2, 0.5f);
+            e.print_segment(d.seg[1], 0.5f);
             ImGui::SameLine();
             ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 40.0f);
-            e.print_segment(d.o_seg1, 0.5f);
+            e.print_segment(d.seg[2], 0.5f);
             ImGui::SameLine();
-            e.print_segment(d.o_seg0, 0.5f);
+            e.print_segment(d.seg[3], 0.5f);
+            ImGui::SameLine();
+            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 40.0f);
+            e.print_segment(d.seg[4], 0.5f);
+            ImGui::SameLine();
+            e.print_segment(d.seg[5], 0.5f);
 
             ImGui::End();
         }

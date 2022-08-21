@@ -4,6 +4,8 @@ module bcd_decoder (
     input [3:0] i_in,
     output [7:0] o_out
 );
+    reg [7:0] o_out;
+    
     always @(*) begin
         case (i_in)
             4'd0: o_out <= 8'b0011_1111;
