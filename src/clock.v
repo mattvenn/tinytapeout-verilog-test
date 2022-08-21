@@ -45,7 +45,7 @@ module clock (
     );    
     bcd_counter_8b bcd_hours(
         .i_clk(i_clk),
-        .i_rst(i_rst | (hours == 8'h24)),
+        .i_rst(i_rst | (hours[5] & hours[4] & hours[2])),
         .i_en(minutes_carry),
         .o_bcd(hours),
         .i_max(8'h29),
