@@ -4,4 +4,4 @@ proc
 flatten
 opt
 write_ilang clock.sim.ilang
-write_cxxrtl clock.sim.cpp
+write_cxxrtl -header clock.sim.cpp
