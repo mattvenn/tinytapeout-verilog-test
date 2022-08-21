@@ -14,7 +14,7 @@
 #CXX = g++
 CXX = clang++
 
-EXE = example_glfw_opengl3
+EXE = tinytapeout_7segment_clock_sim
 IMGUI_DIR = deps/imgui/
 SOURCES = main.cpp harness.cpp clock.sim.cpp eight_font.cpp
 SOURCES += $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/imgui_tables.cpp $(IMGUI_DIR)/imgui_widgets.cpp
