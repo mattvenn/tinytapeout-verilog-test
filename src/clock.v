@@ -45,7 +45,7 @@ module clock (
     );    
     bcd_counter_8b bcd_hours(
         .i_clk(i_clk),
-        .i_rst(i_rst | (hours[5] & hours[4] & hours[2])),
+        .i_rst(i_rst | (hours[5] & hours[2])),
         .i_en(minutes_carry | set_en[2]),
         .o_bcd(hours),
         .i_max(8'h29),
@@ -53,6 +53,8 @@ module clock (
     );
 
     mux_6_4b mux(
+        .i_clk(i_clk),
+        .i_rst(i_rst),
         .i_in0(seconds[3:0]),
         .i_in1(seconds[7:4]),
         .i_in2(minutes[3:0]),
@@ -60,7 +62,8 @@ module clock (
         .i_in4(hours[3:0]),
         .i_in5(hours[7:4]),
         .i_sel(mux_sel),
-        .o_out(mux_out)
+        .o_out(mux_out),
+        .i_latch(sr_load)
     );
 
     bcd_decoder dec(
