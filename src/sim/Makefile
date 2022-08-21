@@ -16,7 +16,7 @@ CXX = clang++
 
 EXE = example_glfw_opengl3
 IMGUI_DIR = deps/imgui/
-SOURCES = main.cpp
+SOURCES = main.cpp harness.cpp clock.sim.cpp eight_font.cpp
 SOURCES += $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/imgui_tables.cpp $(IMGUI_DIR)/imgui_widgets.cpp
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_glfw.cpp $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
 OBJS = $(addsuffix .o, $(basename $(notdir $(SOURCES))))
@@ -85,7 +85,7 @@ all: clock.sim.cpp $(EXE)
 $(EXE): $(OBJS)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBS)
 
-clock.sim.cpp: ../bcd_counter.v ../clock.v ../bcd_decoder.v ../ctrl.v
+clock.sim.cpp: ../bcd_counter.v ../clock.v ../bcd_decoder.v ../ctrl.v proc.ys
 	yosys proc.ys
 
 clean:
