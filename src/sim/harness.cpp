@@ -29,20 +29,20 @@ void harness::step(void)
     m.unlock();
 }
 
-void harness::i_set(bool v)
+void harness::i_minute(bool v)
 {
     m.lock();
     {
-        top.p_i__set.set<bool>(v);
+        top.p_i__min__up.set<bool>(v);
     }
     m.unlock();
 }
 
-void harness::i_up(bool v)
+void harness::i_hour(bool v)
 {
     m.lock();
     {
-        top.p_i__up.set<bool>(v);
+        top.p_i__hour__up.set<bool>(v);
     }
     m.unlock();
 }

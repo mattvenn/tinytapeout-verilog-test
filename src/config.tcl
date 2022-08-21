@@ -22,7 +22,8 @@ $::env(DESIGN_DIR)/ctrl.v \
 $::env(DESIGN_DIR)/clock.v \
 $::env(DESIGN_DIR)/mux_6_4b.v \
 $::env(DESIGN_DIR)/output_sr.v \
-$::env(DESIGN_DIR)/bcd_counter.v"
+$::env(DESIGN_DIR)/bcd_counter.v \
+$::env(DESIGN_DIR)/rise_edge.v"
 
 # absolute die size
 set ::env(FP_SIZING) absolute

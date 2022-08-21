@@ -85,7 +85,7 @@ all: clock.sim.cpp $(EXE)
 $(EXE): $(OBJS)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBS)
 
-clock.sim.cpp: ../bcd_counter.v ../clock.v ../bcd_decoder.v ../ctrl.v ../mux_6_4b.v  proc.ys
+clock.sim.cpp: ../bcd_counter.v ../clock.v ../bcd_decoder.v ../ctrl.v ../mux_6_4b.v ../rise_edge.v proc.ys
 	yosys proc.ys
 
 clean:

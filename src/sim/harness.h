@@ -10,8 +10,8 @@ class harness
 public:
     harness(void);
     void step(void);
-    void i_set(bool v);
-    void i_up(bool v);
+    void i_minute(bool v);
+    void i_hour(bool v);
     int get_cycles(void);
 
     unsigned char seg[6];

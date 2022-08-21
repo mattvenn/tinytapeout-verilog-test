@@ -1,4 +1,4 @@
-read_verilog ../clock.v ../bcd_counter.v ../bcd_decoder.v ../ctrl.v ../output_sr.v ../mux_6_4b.v
+read_verilog ../clock.v ../bcd_counter.v ../bcd_decoder.v ../ctrl.v ../output_sr.v ../mux_6_4b.v ../rise_edge.v
 hierarchy -check -top clock
 proc
 flatten
