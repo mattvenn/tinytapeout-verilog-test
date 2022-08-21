@@ -28,7 +28,6 @@ $::env(DESIGN_DIR)/bcd_counter.v"
 set ::env(FP_SIZING) absolute
 set ::env(DIE_AREA) "0 0 100 100"
 set ::env(FP_CORE_UTIL) 50
-set ::env(PL_BASIC_PLACEMENT) {1}
 set ::env(PL_TARGET_DENSITY) 0.70
 
 # use alternative efabless decap cells to solve LI density issue
