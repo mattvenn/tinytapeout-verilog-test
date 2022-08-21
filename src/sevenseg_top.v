@@ -1,5 +1,4 @@
 `default_nettype none
-//`include "user_module_339898704941023827.v"
 
 module sevenseg_top (
   input TINY_CLK,
@@ -21,6 +20,14 @@ assign io_in_x[5] = io_in[5];
 assign io_in_x[6] = io_in[6];
 assign io_in_x[7] = io_in[7];
 
-user_module_339898704941023827 mod1(.io_in(io_in_x), .io_out(io_out));
+clock clock_top (
+    .i_clk(io_in_x[0]),
+    .i_rst(io_in_x[1]),
+    .i_set_h(io_in_x[2]),
+    .i_set_m(io_in_x[3]),
+    .o_clk(io_out[0]),
+    .o_latch(io_out[1]),
+    .o_bit(io_out[2])
+);
 
 endmodule
