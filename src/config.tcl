@@ -2,7 +2,7 @@
 set script_dir [file dirname [file normalize [info script]]]
 
 # HACK: edited this, instead of relying on the Makefile to prep this for us
-set ::env(DESIGN_NAME) scan_wrapper_339898704941023827
+set ::env(DESIGN_NAME) scan_wrapper_340579111348994642
 
 # save some time
 set ::env(RUN_KLAYOUT_XOR) 0
