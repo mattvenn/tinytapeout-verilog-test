@@ -9,8 +9,7 @@ module user_module_340579111348994642(
 clock clock_top (
     .i_clk(io_in[0]),
     .i_rst(io_in[1]),
-    .i_set_h(io_in[2]),
-    .i_set_m(io_in[3]),
+    .i_set(io_in[2]),
     .o_clk(io_out[0]),
     .o_latch(io_out[1]),
     .o_bit(io_out[2])
