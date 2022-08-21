@@ -1,0 +1,7 @@
+read_verilog ../clock.v ../bcd_counter.v ../bcd_decoder.v
+hierarchy -check -top clock
+proc
+flatten
+opt
+write_ilang clock.sim.ilang
+write_cxxrtl clock.sim.cpp
