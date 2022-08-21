@@ -29,22 +29,23 @@ void harness::step(void)
     m.unlock();
 }
 
-void harness::i_set_m(bool v)
+void harness::i_set(bool v)
 {
     m.lock();
     {
-        top.p_i__set__m.set<bool>(v);
+        top.p_i__set.set<bool>(v);
     }
     m.unlock();
 }
-void harness::i_set_h(bool v)
-{
-    m.lock();
-    {
-        top.p_i__set__h.set<bool>(v);
-    }
-    m.unlock();
-}
+
+// void harness::i_set(bool v)
+// {
+//     m.lock();
+//     {
+//         top.p_i__set__h.set<bool>(v);
+//     }
+//     m.unlock();
+// }
 
 int harness::get_cycles()
 {
@@ -98,6 +99,6 @@ void harness::thread_func()
     while (true)
     {
         step();
-        std::this_thread::sleep_for(std::chrono::milliseconds(4)); /* ~256Hz */
+        std::this_thread::sleep_for(std::chrono::milliseconds(2)); /* ~512Hz */
     }
 }

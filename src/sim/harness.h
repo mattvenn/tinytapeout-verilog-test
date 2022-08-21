@@ -10,8 +10,7 @@ class harness
 public:
     harness(void);
     void step(void);
-    void i_set_m(bool v);
-    void i_set_h(bool v);
+    void i_set(bool v);
     int get_cycles(void);
 
     unsigned char seg[6];

@@ -101,39 +101,38 @@ int main(int, char **)
     // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
     {
       ImGui::SetNextWindowSize(ImVec2(160, 72));
-      ImGui::Begin("Clock Sim", (bool*)0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove );
+      ImGui::Begin("Clock Sim", (bool *)0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
       {
-      ImGui::SetWindowPos(ImVec2(5,5));
-      ImGui::Text("cycles: %u", design_harness.get_cycles());
+        ImGui::SetWindowPos(ImVec2(5, 5));
+        ImGui::Text("cycles: %u", design_harness.get_cycles());
 
-      ImGui::Button("Set Min");
-      design_harness.i_set_m(ImGui::IsItemActive());
-      ImGui::SameLine();
+        ImGui::Button("Set");
+        design_harness.i_set(ImGui::IsItemActive());
+        ImGui::SameLine();
 
-      ImGui::Button("Set Hour");
-      design_harness.i_set_h(ImGui::IsItemActive());
+        //ImGui::Button("Set Hour");
+        //design_harness.i_set_h(ImGui::IsItemActive());
       }
       ImGui::End();
 
-
       ImGui::SetNextWindowSize(ImVec2(836, 200));
-      ImGui::Begin("Clock Display", (bool*)0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove ); 
+      ImGui::Begin("Clock Display", (bool *)0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
       {
-      ImGui::SetWindowPos(ImVec2(10,90));
-      /* Print 7 segment displays */
-      ef.print_segment(design_harness.seg[0], 0.5f);
-      ImGui::SameLine();
-      ef.print_segment(design_harness.seg[1], 0.5f);
-      ImGui::SameLine();
-      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 40.0f);
-      ef.print_segment(design_harness.seg[2], 0.5f);
-      ImGui::SameLine();
-      ef.print_segment(design_harness.seg[3], 0.5f);
-      ImGui::SameLine();
-      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 40.0f);
-      ef.print_segment(design_harness.seg[4], 0.5f);
-      ImGui::SameLine();
-      ef.print_segment(design_harness.seg[5], 0.5f);
+        ImGui::SetWindowPos(ImVec2(10, 90));
+        /* Print 7 segment displays */
+        ef.print_segment(design_harness.seg[0], 0.5f);
+        ImGui::SameLine();
+        ef.print_segment(design_harness.seg[1], 0.5f);
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 40.0f);
+        ef.print_segment(design_harness.seg[2], 0.5f);
+        ImGui::SameLine();
+        ef.print_segment(design_harness.seg[3], 0.5f);
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 40.0f);
+        ef.print_segment(design_harness.seg[4], 0.5f);
+        ImGui::SameLine();
+        ef.print_segment(design_harness.seg[5], 0.5f);
       }
       ImGui::End();
     }

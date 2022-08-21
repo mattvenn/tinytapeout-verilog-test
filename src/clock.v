@@ -3,8 +3,9 @@
 module clock (
     input i_clk,
     input i_rst,
-    input i_set_h,
-    input i_set_m,
+    input i_set,
+    input i_up,
+    input i_down,
     output o_clk,
     output o_latch,
     output o_bit
@@ -37,7 +38,7 @@ module clock (
     bcd_counter_8b bcd_minutes(
         .i_clk(i_clk),
         .i_rst(i_rst),
-        .i_en(seconds_carry | (cnt_en & i_set_m)),
+        .i_en(seconds_carry),
         .o_bcd(minutes),
         .i_max(8'h59),
         .o_carry(minutes_carry)
@@ -45,7 +46,7 @@ module clock (
     bcd_counter_8b bcd_hours(
         .i_clk(i_clk),
         .i_rst(i_rst | (hours == 8'h24)),
-        .i_en(minutes_carry | (cnt_en & i_set_h)),
+        .i_en(minutes_carry),
         .o_bcd(hours),
         .i_max(8'h29),
         .o_carry()
@@ -80,11 +81,12 @@ module clock (
     ctrl ctrl(
         .i_clk(i_clk),
         .i_rst(i_rst),
-        .o_muxsel(mux_sel),
-        .o_srload(sr_load),
         .i_srbusy(sr_busy),
+        .o_srload(sr_load),
+        .o_muxsel(mux_sel),
         .o_latch(o_latch),
-        .o_cnt_en(cnt_en)
+        .o_cnt_en(cnt_en),
+        .i_set(i_set),
     );
 
 

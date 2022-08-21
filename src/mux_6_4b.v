@@ -21,7 +21,7 @@ module mux_6_4b (
             3'd3: o_out <= i_in3;
             3'd4: o_out <= i_in4;
             3'd5: o_out <= i_in5; 
-            default: o_out <= 4'b0000;
+            default: o_out <= 4'b1111;
         endcase
     end
 endmodule

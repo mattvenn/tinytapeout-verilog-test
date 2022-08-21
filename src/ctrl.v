@@ -7,17 +7,34 @@ module ctrl (
     input i_srbusy,
     output o_srload,
     output o_latch,
-    output o_cnt_en
+    output o_cnt_en,
+    input i_set
 );
     reg [3:0] state;
     reg [2:0] counter;
-    reg [7:0] scaler;
+    reg [8:0] scaler;
 
     reg o_srload;
-    assign o_muxsel = counter;
-    assign o_cnt_en = (scaler == 255);
+    assign o_cnt_en = (scaler == 0);
     assign o_latch = (state == 4'd4);
     
+    always @(*) begin
+        o_muxsel <= counter;
+        if(set_toggle)begin
+            if((set_state == 4'd1) && (counter[2:1] == 2'b00))begin
+                o_muxsel <= 3'd6;
+            end
+            if((set_state == 4'd2) && (counter[2:1] == 2'b01))begin
+                o_muxsel <= 3'd6;
+            end
+            if((set_state == 4'd3) && (counter[2:1] == 2'b10))begin
+                o_muxsel <= 3'd6;
+            end
+        end
+
+
+        
+    end
 
     always @(posedge i_clk) begin
         scaler <= scaler + 8'd1;
@@ -61,6 +78,79 @@ module ctrl (
             o_srload <= 1'b0;
         end
     end
+
+
+    reg [3:0] set_state;
+    reg [9:0] set_counter;
+    reg set_toggle;
+    reg i_set_r;
+    
+    always @(posedge i_clk) begin
+        if(o_latch) begin
+            set_toggle <= ~set_toggle;
+        end
+        
+        case (set_state)
+            4'd0: begin
+                if(i_set) begin
+                    set_counter <= set_counter + 8'd1;
+                    if(set_counter[9])begin
+                        set_state <= 4'd1;
+                        set_counter <= 8'd0;
+                        end
+                end else begin 
+                    set_counter <= 8'd0;
+                end
+            end 
+            4'd1: begin
+                /* Editing Hours */
+                if(i_set) begin
+                    set_counter <= set_counter + 8'd1;
+                    if(set_counter[9])begin
+                        set_state <= 4'd2;
+                        set_counter <= 8'd0;
+                        end
+                end else begin 
+                    set_counter <= 8'd0;
+                end
+            end 
+            4'd2: begin
+                /* Editing Minutes */
+                if(i_set) begin
+                    set_counter <= set_counter + 8'd1;
+                    if(set_counter[9])begin
+                        set_state <= 4'd3;
+                        set_counter <= 8'd0;
+                        end
+                end else begin 
+                    set_counter <= 8'd0;
+                end
+            end 
+            4'd3: begin
+                /* Editing Seconds */
+                if(i_set) begin
+                    set_counter <= set_counter + 8'd1;
+                    if(set_counter[9])begin
+                        set_state <= 4'd0;
+                        set_counter <= 8'd0;
+                        end
+                end else begin 
+                    set_counter <= 8'd0;
+                end
+            end 
+            
+
+            default: set_state <= 4'd0;
+        endcase
+
+        if(i_rst) begin
+            set_state <= 4'd4;
+            set_counter <= 4'd0;
+            set_toggle <= 1'b0;
+        end
+    end
+
+    
 
 endmodule
 
