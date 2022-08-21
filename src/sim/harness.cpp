@@ -2,42 +2,47 @@
 
 harness::harness(void)
 {
+    /* Run through reset step */
     top.step();
-
     top.p_i__rst.set<bool>(true);
     top.step();
     top.step();
     top.p_i__rst.set<bool>(false);
 
+    /* Spin up new thread to clock the rtl model */
     th = new std::thread(&harness::thread_func, this);
 }
 
 void harness::step(void)
 {
     m.lock();
+    {
+        cycles++;
 
-    cycles++;
+        top.p_i__clk.set(false);
+        top.step();
+        top.p_i__clk.set(true);
+        top.step();
 
-    top.p_i__clk.set(false);
-    top.step();
-    top.p_i__clk.set(true);
-    top.step();
-
-    sr_logic();
-
+        sr_logic();
+    }
     m.unlock();
 }
 
 void harness::i_set_m(bool v)
 {
     m.lock();
-    top.p_i__set__m.set<bool>(v);
+    {
+        top.p_i__set__m.set<bool>(v);
+    }
     m.unlock();
 }
 void harness::i_set_h(bool v)
 {
     m.lock();
-    top.p_i__set__h.set<bool>(v);
+    {
+        top.p_i__set__h.set<bool>(v);
+    }
     m.unlock();
 }
 
@@ -45,7 +50,9 @@ int harness::get_cycles()
 {
     int _cycles;
     m.lock();
-    _cycles = cycles;
+    {
+        _cycles = cycles;
+    }
     m.unlock();
     return _cycles;
 }
