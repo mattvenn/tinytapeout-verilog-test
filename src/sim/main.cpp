@@ -109,6 +109,9 @@ int main(int, char **)
         ImGui::Button("Set");
         design_harness.i_set(ImGui::IsItemActive());
         ImGui::SameLine();
+        ImGui::Button("Up");
+        design_harness.i_up(ImGui::IsItemActive());
+        ImGui::SameLine();
 
         //ImGui::Button("Set Hour");
         //design_harness.i_set_h(ImGui::IsItemActive());

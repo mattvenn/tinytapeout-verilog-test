@@ -11,6 +11,7 @@ public:
     harness(void);
     void step(void);
     void i_set(bool v);
+    void i_up(bool v);
     int get_cycles(void);
 
     unsigned char seg[6];

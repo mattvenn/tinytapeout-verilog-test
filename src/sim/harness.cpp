@@ -38,14 +38,14 @@ void harness::i_set(bool v)
     m.unlock();
 }
 
-// void harness::i_set(bool v)
-// {
-//     m.lock();
-//     {
-//         top.p_i__set__h.set<bool>(v);
-//     }
-//     m.unlock();
-// }
+void harness::i_up(bool v)
+{
+    m.lock();
+    {
+        top.p_i__up.set<bool>(v);
+    }
+    m.unlock();
+}
 
 int harness::get_cycles()
 {

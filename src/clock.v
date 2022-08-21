@@ -5,7 +5,6 @@ module clock (
     input i_rst,
     input i_set,
     input i_up,
-    input i_down,
     output o_clk,
     output o_latch,
     output o_bit
@@ -25,12 +24,13 @@ module clock (
     wire sr_load;
     wire sr_busy;
     wire cnt_en;
+    wire [2:0] set_en;
 
 
     bcd_counter_8b bcd_seconds(
         .i_clk(i_clk),
         .i_rst(i_rst),
-        .i_en(cnt_en),
+        .i_en(cnt_en | set_en[0]),
         .o_bcd(seconds),
         .i_max(8'h59),
         .o_carry(seconds_carry)
@@ -38,7 +38,7 @@ module clock (
     bcd_counter_8b bcd_minutes(
         .i_clk(i_clk),
         .i_rst(i_rst),
-        .i_en(seconds_carry),
+        .i_en(seconds_carry | set_en[1]),
         .o_bcd(minutes),
         .i_max(8'h59),
         .o_carry(minutes_carry)
@@ -46,7 +46,7 @@ module clock (
     bcd_counter_8b bcd_hours(
         .i_clk(i_clk),
         .i_rst(i_rst | (hours[5] & hours[4] & hours[2])),
-        .i_en(minutes_carry),
+        .i_en(minutes_carry | set_en[2]),
         .o_bcd(hours),
         .i_max(8'h29),
         .o_carry()
@@ -87,6 +87,8 @@ module clock (
         .o_latch(o_latch),
         .o_cnt_en(cnt_en),
         .i_set(i_set),
+        .i_up(i_up),
+        .o_set_en(set_en)
     );
 
 

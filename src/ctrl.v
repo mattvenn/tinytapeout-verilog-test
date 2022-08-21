@@ -8,7 +8,9 @@ module ctrl (
     output o_srload,
     output o_latch,
     output o_cnt_en,
-    input i_set
+    input i_set,
+    input i_up,
+    output [2:0] o_set_en
 );
     reg [3:0] state;
     reg [2:0] counter;
@@ -24,10 +26,10 @@ module ctrl (
             if((set_target == 2'd1) && (counter[2:1] == 2'b00))begin
                 o_muxsel <= 3'd6;
             end
-            if((set_target == 2'd2) && (counter[2:1] == 2'b?1))begin
+            if((set_target == 2'd2) && (counter[1] == 1'b1))begin
                 o_muxsel <= 3'd6;
             end
-            if((set_target == 2'd3) && (counter[2:1] == 2'b1?))begin
+            if((set_target == 2'd3) && (counter[2] == 1'b1))begin
                 o_muxsel <= 3'd6;
             end
         end
@@ -84,7 +86,8 @@ module ctrl (
     reg [9:0] set_counter;
     reg [1:0] set_target;
     reg set_toggle;
-    reg i_set_r;
+    reg i_up_r;
+    reg [2:0] o_set_en;
     
     always @(posedge i_clk) begin
         if(o_latch) begin
@@ -100,10 +103,19 @@ module ctrl (
         end else begin 
             set_counter <= 8'd0;
         end
+
+        i_up_r <= i_up;
+        o_set_en <= 3'd0;
+        if(i_up & ~i_up_r) begin
+            case (set_target)
+                2'd1: o_set_en[0] <= 1'b1;
+                2'd2: o_set_en[1] <= 1'b1;
+                2'd3: o_set_en[2] <= 1'b1;
+            endcase
+        end
             
         if(i_rst) begin
             set_counter <= 4'd0;
-            set_toggle <= 1'b0;
             set_target <= 2'd0;
         end
     end
