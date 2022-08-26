@@ -73,7 +73,7 @@ module strobe (
     input clk, 
     output [3:0] strobe_out);
 
-    reg [12:0] counter = 0;
+    reg [10:0] counter = 0;
     reg [3:0] strobe_out = 4'b0001;
 
     always @ (posedge clk)
