@@ -61,9 +61,9 @@ module sevenseg_to_matrix (
     endfunction
 
     generate
-        genvar i;
-        for (i = 0; i < 8; i = i + 1) begin
-            assign matrix_out[i] = segment(i, sevenseg_in_inv);
+        genvar j;
+        for (j = 0; j < 8; j = j + 1) begin
+            assign matrix_out[j] = segment(j, sevenseg_in_inv);
         end
     endgenerate
 
