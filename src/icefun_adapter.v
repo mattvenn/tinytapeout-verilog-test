@@ -55,9 +55,9 @@ module sevenseg_to_matrix (
             always @ (posedge clk)
             begin
                 if(sevenseg_in_inv[i])
-                    matrix_out[i] = mapping[i][strobe_idx];
+                    matrix_out[i] <= mapping[i][strobe_idx];
                 else
-                    matrix_out[i] = 8'b0000000;
+                    matrix_out[i] <= 8'b0000000;
             end
         end
     endgenerate
