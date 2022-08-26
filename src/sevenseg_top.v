@@ -4,7 +4,8 @@
 module sevenseg_top (
   input TINY_CLK,
   input [7:0] io_in, //using io_in[0] as clk, io_in[1] as reset
-  output [7:0] io_out
+  output [7:0] io_out,
+  output [3:0] io_col
 );
 
 // XXX: All I really want is this: assign io_in[0] = TINY_CLK;
@@ -21,6 +22,9 @@ assign io_in_x[5] = io_in[5];
 assign io_in_x[6] = io_in[6];
 assign io_in_x[7] = io_in[7];
 
-user_module_339898704941023827 mod1(.io_in(io_in_x), .io_out(io_out));
+wire [7:0] sevenseg_io_out;
+
+user_module_339898704941023827 mod1(.io_in(io_in_x), .io_out(sevenseg_io_out));
+sevenseg_to_matrix mod2 (.clk(TINY_CLK), .sevenseg_in(sevenseg_io_out), .io_out(io_out), .io_col(io_col));
 
 endmodule
