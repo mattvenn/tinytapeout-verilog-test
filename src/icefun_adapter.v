@@ -49,17 +49,6 @@ module sevenseg_to_matrix (
     
     strobe strobe_1 (.clk(clk), .strobe_out(strobe_out));
 
-    function [7:0] segment_enabled;
-        input [3:0] idx;
-        input [7:0] segments;
-        begin
-            if(segments[idx])
-                segment_enabled = 8'b11111111;
-            else
-                segment_enabled = 8'b00000000;
-        end
-    endfunction
-
     function [7:0] segment;
         input [3:0] idx;
         input [7:0] segments;
@@ -74,7 +63,6 @@ module sevenseg_to_matrix (
     generate
         genvar i;
         for (i = 0; i < 8; i = i + 1) begin
-            //assign matrix_out[i] = mapping[i][strobe_idx] & segment_enabled(i, sevenseg_in_inv);
             assign matrix_out[i] = segment(i, sevenseg_in_inv);
         end
     endgenerate
