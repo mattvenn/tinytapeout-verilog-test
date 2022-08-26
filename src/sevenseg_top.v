@@ -1,5 +1,5 @@
 `default_nettype none
-//`include "user_module_339898704941023827.v"
+//`include "user_module_341063825089364563.v"
 
 module sevenseg_top (
   input TINY_CLK,
@@ -24,7 +24,7 @@ assign io_in_x[7] = io_in[7];
 
 wire [7:0] sevenseg_io_out;
 
-user_module_339898704941023827 mod1(.io_in(io_in_x), .io_out(sevenseg_io_out));
+user_module_341063825089364563 mod1(.io_in(io_in_x), .io_out(sevenseg_io_out));
 sevenseg_to_matrix mod2 (.clk(TINY_CLK), .sevenseg_in(sevenseg_io_out), .io_out(io_out), .io_col(io_col));
 
 endmodule
