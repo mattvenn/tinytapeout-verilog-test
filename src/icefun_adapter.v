@@ -20,7 +20,7 @@ module sevenseg_to_matrix (
     wire [3:0] strobe_out;
     wire [1:0] strobe_idx;
     wire [7:0] sevenseg_in_inv;
-    reg [7:0] matrix_out [7:0];
+    wire [7:0] matrix_out [7:0];
 
     initial $readmemb("sevenseg_to_matrix.txt", mapping);
 
@@ -49,16 +49,33 @@ module sevenseg_to_matrix (
     
     strobe strobe_1 (.clk(clk), .strobe_out(strobe_out));
 
+    function [7:0] segment_enabled;
+        input [3:0] idx;
+        input [7:0] segments;
+        begin
+            if(segments[idx])
+                segment_enabled = 8'b11111111;
+            else
+                segment_enabled = 8'b00000000;
+        end
+    endfunction
+
+    function [7:0] segment;
+        input [3:0] idx;
+        input [7:0] segments;
+        begin
+            if(segments[idx])
+                segment = mapping[idx][strobe_idx];
+            else
+                segment = 8'b00000000;
+        end
+    endfunction
+
     generate
         genvar i;
         for (i = 0; i < 8; i = i + 1) begin
-            always @ (posedge clk)
-            begin
-                if(sevenseg_in_inv[i])
-                    matrix_out[i] <= mapping[i][strobe_idx];
-                else
-                    matrix_out[i] <= 8'b0000000;
-            end
+            //assign matrix_out[i] = mapping[i][strobe_idx] & segment_enabled(i, sevenseg_in_inv);
+            assign matrix_out[i] = segment(i, sevenseg_in_inv);
         end
     endgenerate
 
