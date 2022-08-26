@@ -6,8 +6,7 @@ module user_module_341063825089364563_tb;
 reg [7:0] io_in;
 wire [7:0] io_out;
 wire [2:0] fn;
-`define fn io_in[3:2]
-`define data io_in[7:4]
+`define speed io_in[4:2]
 
 user_module_341063825089364563 UUT (.io_in(io_in), .io_out(io_out));
 
@@ -33,14 +32,14 @@ end
 initial
 begin
   #20
+  `speed = 4'b0000;
 	io_in[1] = 1;
 	#(CLK_HALF_PERIOD);
 	io_in[1] = 0;
   #100
-  `data = 4'b0000;
-  `fn = 2'b01;
-  #20
-  `fn = 2'b00;
+  `speed = 4'b1111;
+  #100
+  `speed = 4'b0011;
 end
 
 endmodule
