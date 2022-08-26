@@ -12,16 +12,16 @@ module user_module_341063825089364563(
   assign clk = io_in[0];
   wire reset;
   assign reset = io_in[1];
-  wire [3:0] speed;
-  assign speed = io_in[4:2];
 
   reg [COUNTER_WIDTH:0] counter = 0; // XXX: What is the clk freq for TT?
   reg [COUNTER_WIDTH:0] counter_speed = {COUNTER_WIDTH-3{1'b1}};
   reg [2:0] state = 3'b000;
   reg [7:0] led_out = 0;
+  reg direction = 0;
 
   always @(posedge clk) begin
-    counter_speed[COUNTER_WIDTH:COUNTER_WIDTH-3] <= speed ^ 4'b111;
+    counter_speed[COUNTER_WIDTH:COUNTER_WIDTH-3] <= io_in[4:2] ^ 4'b111;
+    direction <= io_in[7];
   end
 
   always @(posedge clk) begin
@@ -33,7 +33,13 @@ module user_module_341063825089364563(
     end else begin
       if (counter >= counter_speed) begin
         counter <= 0;
-        state <= state + 3'b001;
+        if(direction) 
+          state <= state + 3'b001;
+        else
+          if(state == 3'b000)
+            state = 3'b111;
+          else
+            state <= state - 3'b001;
       end
       else
         counter <= counter + 1;
