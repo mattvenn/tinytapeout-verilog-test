@@ -11,6 +11,7 @@ clock clock_top (
     .i_rst(io_in[1]),
     .i_min_up(io_in[2]),
     .i_hour_up(io_in[3]),
+    .i_freq(io_in[4]),
     .o_clk(io_out[0]),
     .o_latch(io_out[1]),
     .o_bit(io_out[2])
