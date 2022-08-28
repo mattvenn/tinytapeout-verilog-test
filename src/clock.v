@@ -3,6 +3,7 @@
 module clock (
     input i_clk,
     input i_rst,
+    input i_freq,
     input i_hour_up,
     input i_min_up,
     output o_clk,
@@ -93,6 +94,7 @@ module clock (
     ctrl ctrl(
         .i_clk(i_clk),
         .i_rst(i_rst),
+        .i_freq(i_freq),
         .i_srbusy(sr_busy),
         .o_srload(sr_load),
         .o_muxsel(mux_sel),

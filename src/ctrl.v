@@ -3,6 +3,7 @@
 module ctrl (
     input i_clk,
     input i_rst,
+    input i_freq,
     output [2:0] o_muxsel,
     input i_srbusy,
     output o_srload,
@@ -11,15 +12,22 @@ module ctrl (
 );
     reg [2:0] state;
     reg [2:0] counter;
-    reg [8:0] scaler;
+    reg [9:0] scaler;
 
     reg o_srload;
-    assign o_cnt_en = &scaler;
+    assign o_cnt_en = scaler == 0;
     assign o_latch = (state == 4'd4);
     assign o_muxsel = counter;
         
     always @(posedge i_clk) begin
-        scaler <= scaler + 8'd1;
+        scaler <= scaler + 10'd1;
+        if(i_freq) begin
+            if(scaler >= (750-1))
+                scaler <= 9'd0;
+        end else begin
+            if(scaler >= (512-1))
+                scaler <= 9'd0;
+        end
 
         case (state)
             3'd0: begin
@@ -46,8 +54,10 @@ module ctrl (
             end 
             3'd4: begin
                 counter <= 3'd0;
-                o_srload <= 1'b1;
-                state <= 4'd1;
+                if(o_cnt_en) begin
+                    o_srload <= 1'b1;
+                    state <= 4'd1;
+                end
             end 
 
             default: state <= 3'd3;
