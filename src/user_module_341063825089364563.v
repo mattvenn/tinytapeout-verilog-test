@@ -17,7 +17,7 @@ module user_module_341063825089364563(
   assign reset = io_in[1];
 
   reg [COUNTER_WIDTH-1:0] counter = 0; // XXX: What is the clk freq for TT?
-  reg [COUNTER_WIDTH-1:0] counter_speed;
+  reg [2:0] counter_speed_prefix;
   reg [2:0] state = 3'b000;
   reg [7:0] led_out;
   reg direction;
@@ -26,18 +26,19 @@ module user_module_341063825089364563(
   reg [FADE_COUNTER_WIDTH-1:0] fade_counter = 0;
   reg [PWM_COUNTER_WIDTH-1:0] pwm_counter = 0;
   wire [4:0] pwm_counter_slice;
+  wire [COUNTER_WIDTH-1:0] counter_speed;
 
   assign pwm_counter_slice = pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5];
+  assign counter_speed = {counter_speed_prefix, {COUNTER_WIDTH-1-3{1'b1}}};
 
   always @(posedge clk) begin
-    counter_speed[COUNTER_WIDTH-1:COUNTER_WIDTH-3] <= io_in[4:2] ^ 4'b111;
+    counter_speed_prefix <= io_in[4:2] ^ 4'b111;
     direction <= io_in[7];
   end
 
   always @(posedge clk) begin
     if(reset) begin
         counter <= 0;
-        counter_speed[COUNTER_WIDTH-1-3:0] <= {COUNTER_WIDTH-3{1'b1}};
         state <= 0;
         led_out <= 8'b00000000;
         segments[0] <= 5'b00000;
