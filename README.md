@@ -2,7 +2,9 @@
 
 (Original readme for the template repository [here](https://github.com/mattvenn/wokwi-verilog-gds-test/blob/main/README.md))
 
-This repo is an experiment in using Verilog source files instead of Wokwi diagrams for [TinyTapeout](https://tinytapeout.com), implementing a 5-bit PDM driver.
+(verilog flow from https://github.com/H-S-S-11/tinytapeout-verilog-test)
+
+This design shows a simple LUTRAM cell, allowing the LUT configuration to be programmed via a traditional frame configuration (the shift register would be shared across the entire die, and the multi-bit frames loaded in parallel for each row/column of the configuration). Then at runtime a pulse generator and decoder enables the LUT also to be used as RAM.
 
 The Verilog flow is:
 
