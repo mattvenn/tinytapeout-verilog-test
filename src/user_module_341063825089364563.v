@@ -27,12 +27,6 @@ module user_module_341063825089364563(
   reg [FADE_COUNTER_WIDTH-1:0] fade_counter = 0;
   reg [PWM_COUNTER_WIDTH-1:0] pwm_counter = 0;
 
-  wire [3:0] segments_0;
-  assign segments_0 = segments[0];
-  wire [3:0] segments_1;
-  assign segments_1 = segments[1];
-
-
   always @(posedge clk) begin
     counter_speed[COUNTER_WIDTH-1:COUNTER_WIDTH-3] <= io_in[4:2] ^ 4'b111;
     direction <= io_in[7];
