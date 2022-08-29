@@ -4,7 +4,7 @@
 //  The pin connections within the user_module are up to you,
 //  although (if one is present) it is recommended to place a clock on io_in[0].
 //  This allows use of the internal clock divider if you wish.
-module user_module_340067262721426004
+module user_module_340067262721426004(
   input [7:0] io_in, 
   output [7:0] io_out
 );
