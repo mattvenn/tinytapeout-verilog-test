@@ -66,14 +66,14 @@ module user_module_341063825089364563(
       fade_counter <= fade_counter + 1;
     end
 
-    led_out[0] <= segments[0] && segments[0] >= pwm_counter_slice;
-    led_out[1] <= segments[1] && segments[1] >= pwm_counter_slice;
-    led_out[2] <= segments[2] && segments[2] >= pwm_counter_slice;
-    led_out[3] <= segments[3] && segments[3] >= pwm_counter_slice;
-    led_out[4] <= segments[4] && segments[4] >= pwm_counter_slice;
-    led_out[5] <= segments[5] && segments[5] >= pwm_counter_slice;
-    led_out[6] <= segments[6] && segments[6] >= pwm_counter_slice;
-    led_out[7] <= segments[7] && segments[7] >= pwm_counter_slice;
+    led_out[0] <= segments[0] >= pwm_counter_slice;
+    led_out[1] <= segments[1] >= pwm_counter_slice;
+    led_out[2] <= segments[2] >= pwm_counter_slice;
+    led_out[3] <= segments[3] >= pwm_counter_slice;
+    led_out[4] <= segments[4] >= pwm_counter_slice;
+    led_out[5] <= segments[5] >= pwm_counter_slice;
+    led_out[6] <= segments[6] >= pwm_counter_slice;
+    led_out[7] <= segments[7] >= pwm_counter_slice;
 
     if(fade_counter == 0)
     begin
