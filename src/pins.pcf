@@ -1,17 +1,17 @@
 # For iceFUN board
 
-set_io --warn-no-port io_out[0]    C10
-set_io --warn-no-port io_out[1]    A10
-set_io --warn-no-port io_out[2]    D7
-set_io --warn-no-port io_out[3]    D6
-set_io --warn-no-port io_out[4]    A7
-set_io --warn-no-port io_out[5]    C7
-set_io --warn-no-port io_out[6]    A4
-set_io --warn-no-port io_out[7]    C4
-set_io --warn-no-port io_col[0]    C5
-set_io --warn-no-port io_col[1]    A6
-set_io --warn-no-port io_col[2]    D10
-set_io --warn-no-port io_col[3]    A12
+set_io --warn-no-port io_out[0]    B14
+set_io --warn-no-port io_out[1]    C12
+set_io --warn-no-port io_out[2]    C14
+set_io --warn-no-port io_out[3]    D12
+set_io --warn-no-port io_out[4]    D14
+set_io --warn-no-port io_out[5]    E12
+set_io --warn-no-port io_out[6]    E14
+set_io --warn-no-port io_out[7]    F12
+# set_io --warn-no-port io_col[0]    C5
+# set_io --warn-no-port io_col[1]    A6
+# set_io --warn-no-port io_col[2]    D10
+# set_io --warn-no-port io_col[3]    A12
 set_io --warn-no-port TINY_CLK     P7
 
 

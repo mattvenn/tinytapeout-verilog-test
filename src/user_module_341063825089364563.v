@@ -6,6 +6,9 @@ module user_module_341063825089364563(
   output [7:0] io_out
 );
   parameter COUNTER_WIDTH = 24;
+  parameter FADE_COUNTER_WIDTH = 21;
+  parameter PWM_COUNTER_WIDTH = 11;
+  parameter COMMON_ANODE = 1;
 
   // using io_in[0] as clk, io_in[1] as reset
   wire clk;
@@ -13,99 +16,132 @@ module user_module_341063825089364563(
   wire reset;
   assign reset = io_in[1];
 
-  reg [COUNTER_WIDTH:0] counter = 0; // XXX: What is the clk freq for TT?
-  reg [COUNTER_WIDTH:0] counter_speed = {COUNTER_WIDTH-3{1'b1}};
+  reg [COUNTER_WIDTH-1:0] counter = 0; // XXX: What is the clk freq for TT?
+  reg [COUNTER_WIDTH-1:0] counter_speed = {COUNTER_WIDTH-3{1'b1}};
   reg [2:0] state = 3'b000;
   reg [7:0] led_out = 0;
   reg direction = 0;
-  reg [3:0] segments [6:0];
+  reg [4:0] segments [6:0];
+  reg [1:0] fade_speed = 2'b11;
+  reg [6:0] segments_processed;
+  reg [FADE_COUNTER_WIDTH-1:0] fade_counter = 0;
+  reg [PWM_COUNTER_WIDTH-1:0] pwm_counter = 0;
+
+  wire [3:0] segments_0;
+  assign segments_0 = segments[0];
+  wire [3:0] segments_1;
+  assign segments_1 = segments[1];
+
 
   always @(posedge clk) begin
-    counter_speed[COUNTER_WIDTH:COUNTER_WIDTH-3] <= io_in[4:2] ^ 4'b111;
+    counter_speed[COUNTER_WIDTH-1:COUNTER_WIDTH-3] <= io_in[4:2] ^ 4'b111;
     direction <= io_in[7];
   end
 
   always @(posedge clk) begin
-    if (reset) begin
+    if(reset) begin
         counter <= 0;
-        counter_speed[COUNTER_WIDTH-4:0] <= {COUNTER_WIDTH-3{1'b1}};
+        counter_speed[COUNTER_WIDTH-1-3:0] <= {COUNTER_WIDTH-3{1'b1}};
         state <= 0;
         led_out <= 8'b00000000;
-        segments[0] = 4'b0000;
-        segments[1] = 4'b0000;
-        segments[2] = 4'b0000;
-        segments[3] = 4'b0000;
-        segments[4] = 4'b0000;
-        segments[5] = 4'b0000;
-        segments[6] = 4'b0000;
-        segments[7] = 4'b0000;
+        segments[0] <= 6'b000000;
+        segments[1] <= 6'b000000;
+        segments[2] <= 6'b000000;
+        segments[3] <= 6'b000000;
+        segments[4] <= 6'b000000;
+        segments[5] <= 6'b000000;
+        segments[6] <= 6'b000000;
+        fade_counter = 0;
+        pwm_counter = 0;
     end else begin
-      if (counter >= counter_speed) begin
+      if(counter >= counter_speed) begin
         counter <= 0;
-        if(direction) 
+        if(direction)
           state <= state + 3'b001;
         else
           if(state == 3'b000)
             state = 3'b111;
           else
             state <= state - 3'b001;
-      end
-      else
+      end else begin
         counter <= counter + 1;
+      end
+      pwm_counter <= pwm_counter + 1;
+      fade_counter <= fade_counter + 1;
     end
 
-    if(segments[0]) begin
+    if(segments[0] && segments[0] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[0] <= 1'b1;
-      segments[0] <= 4'b0000;
     end else
       led_out[0] <= 1'b0;
-    if(segments[1]) begin
+    if(segments[0] && fade_counter == 0)
+      segments[0] <= segments[0] >> 1;
+
+   if(segments[1] && segments[1] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[1] <= 1'b1;
-      segments[1] <= 4'b0000;
     end else
       led_out[1] <= 1'b0;
-    if(segments[2]) begin
+    if(segments[1] && fade_counter == 0)
+      segments[1] <= segments[1] >> 1;
+
+   if(segments[2] && segments[2] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[2] <= 1'b1;
-      segments[2] <= 4'b0000;
     end else
       led_out[2] <= 1'b0;
-    if(segments[3]) begin
+    if(segments[2] && fade_counter == 0)
+      segments[2] <= segments[2] >> 1;
+
+   if(segments[3] && segments[3] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[3] <= 1'b1;
-      segments[3] <= 4'b0000;
     end else
       led_out[3] <= 1'b0;
-    if(segments[4]) begin
+    if(segments[3] && fade_counter == 0)
+      segments[3] <= segments[3] >> 1;
+
+   if(segments[4] && segments[4] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[4] <= 1'b1;
-      segments[4] <= 4'b0000;
     end else
       led_out[4] <= 1'b0;
-    if(segments[5]) begin
+    if(segments[4] && fade_counter == 0)
+      segments[4] <= segments[4] >> 1;
+
+   if(segments[5] && segments[5] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[5] <= 1'b1;
-      segments[5] <= 4'b0000;
     end else
       led_out[5] <= 1'b0;
-    if(segments[6]) begin
+    if(segments[5] && fade_counter == 0)
+      segments[5] <= segments[5] >> 1;
+
+   if(segments[6] && segments[6] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[6] <= 1'b1;
-      segments[6] <= 4'b0000;
     end else
       led_out[6] <= 1'b0;
-    if(segments[7]) begin
+    if(segments[6] && fade_counter == 0)
+      segments[6] <= segments[6] >> 1;
+
+    if(segments[7] && segments[7] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
       led_out[7] <= 1'b1;
-      segments[7] <= 4'b0000;
     end else
       led_out[7] <= 1'b0;
+    if(segments[7] && fade_counter == 0)
+      segments[7] <= segments[7] >> 1;
 
     case(state)
-      3'b000 : segments[0] <= 4'b1111;
-      3'b001 : segments[1] <= 4'b1111;
-      3'b010 : segments[6] <= 4'b1111;
-      3'b011 : segments[4] <= 4'b1111;
-      3'b100 : segments[3] <= 4'b1111;
-      3'b101 : segments[2] <= 4'b1111;
-      3'b110 : segments[6] <= 4'b1111;
-      3'b111 : segments[5] <= 4'b1111;
+      3'b000 : segments[0] <= 6'b111111;
+      3'b001 : segments[1] <= 6'b111111;
+      3'b010 : segments[6] <= 6'b111111;
+      3'b011 : segments[4] <= 6'b111111;
+      3'b100 : segments[3] <= 6'b111111;
+      3'b101 : segments[2] <= 6'b111111;
+      3'b110 : segments[6] <= 6'b111111;
+      3'b111 : segments[5] <= 6'b111111;
     endcase
   end
 
-  assign io_out = led_out ^ 8'b11111111;
+  generate
+    if(COMMON_ANODE)
+      assign io_out = led_out ^ 8'b11111111;
+    else
+      assign io_out = led_out;
+  endgenerate
 endmodule

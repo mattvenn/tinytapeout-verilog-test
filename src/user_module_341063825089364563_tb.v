@@ -9,6 +9,11 @@ wire [2:0] fn;
 `define speed io_in[4:2]
 `define direction io_in[7]
 
+defparam UUT.COUNTER_WIDTH = 8;
+defparam UUT.FADE_COUNTER_WIDTH = 8;
+defparam UUT.COUNTER_WIDTH = 6;
+defparam UUT.PWM_COUNTER_WIDTH = 4;
+
 user_module_341063825089364563 UUT (.io_in(io_in), .io_out(io_out));
 
 initial begin
@@ -32,16 +37,17 @@ end
 
 initial
 begin
+  io_in = 0;
   #20
-  `speed = 4'b0000;
+  `speed = 3'b000;
   `direction = 1'b0;
 	io_in[1] = 1;
 	#(CLK_HALF_PERIOD);
 	io_in[1] = 0;
   #100
-  `speed = 4'b1111;
+  `speed = 3'b111;
   #100
-  `speed = 4'b0011;
+  `speed = 3'b011;
   #100
   `direction = 1'b1;
 end
