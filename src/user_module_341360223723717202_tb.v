@@ -6,7 +6,7 @@ module user_module_341360223723717202_tb;
 reg [7:0] io_in;
 wire [7:0] io_out;
 
-user_module_341360223723717202 UUT (.io_in(io_in), .io_out(io_out));
+user_module_341360223723717202 m (.io_in(io_in), .io_out(io_out));
 
 initial begin
   $dumpfile("user_module_341360223723717202_tb.vcd");
@@ -14,7 +14,7 @@ initial begin
 end
 
 initial begin
-   #100_000_000; // Wait a long time in simulation units (adjust as needed).
+   #2000;
    $display("Caught by trap");
    $finish;
  end
@@ -29,10 +29,34 @@ end
 
 initial 
 begin
+  // reset
   #20
-	io_in[1] = 1;
-	#(CLK_HALF_PERIOD);
-	io_in[1] = 0;
+  $display("RESET");
+  io_in[1] = 1;
+  #(CLK_HALF_PERIOD);
+  io_in[1] = 0;
+end
+
+always begin
+  // external memory
+  //case(io_out[3:0])
+  case(io_out[0])
+    0: io_in[7:4] <= 1;
+    1: io_in[7:4] <= 2;
+    default: io_in[7:4] <= 15;
+  endcase
+  #1;
+end
+
+initial begin
+  $monitor(
+    "a",m.reg_a,"  ",
+    "b",m.reg_b,"  ",
+    "pc",m.pc,"  ",
+    "micro",m.micro_pc,"  ",
+    "instr",m.instr,"  ",
+    ""
+  );
 end
 
 endmodule
