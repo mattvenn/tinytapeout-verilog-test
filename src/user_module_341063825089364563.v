@@ -71,57 +71,53 @@ module user_module_341063825089364563(
       led_out[0] <= 1'b1;
     end else
       led_out[0] <= 1'b0;
-    if(segments[0] && fade_counter == 0)
-      segments[0] <= segments[0] >> 1;
 
    if(segments[1] && segments[1] >= pwm_counter_slice) begin
       led_out[1] <= 1'b1;
     end else
       led_out[1] <= 1'b0;
-    if(segments[1] && fade_counter == 0)
-      segments[1] <= segments[1] >> 1;
 
    if(segments[2] && segments[2] >= pwm_counter_slice) begin
       led_out[2] <= 1'b1;
     end else
       led_out[2] <= 1'b0;
-    if(segments[2] && fade_counter == 0)
-      segments[2] <= segments[2] >> 1;
 
    if(segments[3] && segments[3] >= pwm_counter_slice) begin
       led_out[3] <= 1'b1;
     end else
       led_out[3] <= 1'b0;
-    if(segments[3] && fade_counter == 0)
-      segments[3] <= segments[3] >> 1;
 
    if(segments[4] && segments[4] >= pwm_counter_slice) begin
       led_out[4] <= 1'b1;
     end else
       led_out[4] <= 1'b0;
-    if(segments[4] && fade_counter == 0)
-      segments[4] <= segments[4] >> 1;
 
    if(segments[5] && segments[5] >= pwm_counter_slice) begin
       led_out[5] <= 1'b1;
     end else
       led_out[5] <= 1'b0;
-    if(segments[5] && fade_counter == 0)
-      segments[5] <= segments[5] >> 1;
 
    if(segments[6] && segments[6] >= pwm_counter_slice) begin
       led_out[6] <= 1'b1;
     end else
       led_out[6] <= 1'b0;
-    if(segments[6] && fade_counter == 0)
-      segments[6] <= segments[6] >> 1;
 
     if(segments[7] && segments[7] >= pwm_counter_slice) begin
       led_out[7] <= 1'b1;
     end else
       led_out[7] <= 1'b0;
-    if(segments[7] && fade_counter == 0)
+
+    if(fade_counter == 0)
+    begin
+      segments[0] <= segments[0] >> 1;
+      segments[1] <= segments[1] >> 1;
+      segments[2] <= segments[2] >> 1;
+      segments[3] <= segments[3] >> 1;
+      segments[4] <= segments[4] >> 1;
+      segments[5] <= segments[5] >> 1;
+      segments[6] <= segments[6] >> 1;
       segments[7] <= segments[7] >> 1;
+    end
 
     case(state)
       3'b000 : segments[0] <= 5'b11111;
