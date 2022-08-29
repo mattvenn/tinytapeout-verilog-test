@@ -33,6 +33,9 @@ set ::env(DECAP_CELL) "\
     sky130_ef_sc_hd__decap_12"
 
 # clock
+
+set ::env(CLOCK_TREE_SYNTH) 0
+
 set ::env(CLOCK_PERIOD) "100"
 set ::env(CLOCK_PORT) "clk"
 
