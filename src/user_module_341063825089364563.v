@@ -44,13 +44,13 @@ module user_module_341063825089364563(
         counter_speed[COUNTER_WIDTH-1-3:0] <= {COUNTER_WIDTH-3{1'b1}};
         state <= 0;
         led_out <= 8'b00000000;
-        segments[0] <= 6'b000000;
-        segments[1] <= 6'b000000;
-        segments[2] <= 6'b000000;
-        segments[3] <= 6'b000000;
-        segments[4] <= 6'b000000;
-        segments[5] <= 6'b000000;
-        segments[6] <= 6'b000000;
+        segments[0] <= 5'b00000;
+        segments[1] <= 5'b00000;
+        segments[2] <= 5'b00000;
+        segments[3] <= 5'b00000;
+        segments[4] <= 5'b00000;
+        segments[5] <= 5'b00000;
+        segments[6] <= 5'b00000;
         fade_counter = 0;
         pwm_counter = 0;
     end else begin
@@ -70,56 +70,56 @@ module user_module_341063825089364563(
       fade_counter <= fade_counter + 1;
     end
 
-    if(segments[0] && segments[0] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+    if(segments[0] && segments[0] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[0] <= 1'b1;
     end else
       led_out[0] <= 1'b0;
     if(segments[0] && fade_counter == 0)
       segments[0] <= segments[0] >> 1;
 
-   if(segments[1] && segments[1] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+   if(segments[1] && segments[1] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[1] <= 1'b1;
     end else
       led_out[1] <= 1'b0;
     if(segments[1] && fade_counter == 0)
       segments[1] <= segments[1] >> 1;
 
-   if(segments[2] && segments[2] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+   if(segments[2] && segments[2] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[2] <= 1'b1;
     end else
       led_out[2] <= 1'b0;
     if(segments[2] && fade_counter == 0)
       segments[2] <= segments[2] >> 1;
 
-   if(segments[3] && segments[3] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+   if(segments[3] && segments[3] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[3] <= 1'b1;
     end else
       led_out[3] <= 1'b0;
     if(segments[3] && fade_counter == 0)
       segments[3] <= segments[3] >> 1;
 
-   if(segments[4] && segments[4] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+   if(segments[4] && segments[4] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[4] <= 1'b1;
     end else
       led_out[4] <= 1'b0;
     if(segments[4] && fade_counter == 0)
       segments[4] <= segments[4] >> 1;
 
-   if(segments[5] && segments[5] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+   if(segments[5] && segments[5] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[5] <= 1'b1;
     end else
       led_out[5] <= 1'b0;
     if(segments[5] && fade_counter == 0)
       segments[5] <= segments[5] >> 1;
 
-   if(segments[6] && segments[6] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+   if(segments[6] && segments[6] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[6] <= 1'b1;
     end else
       led_out[6] <= 1'b0;
     if(segments[6] && fade_counter == 0)
       segments[6] <= segments[6] >> 1;
 
-    if(segments[7] && segments[7] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-6]) begin
+    if(segments[7] && segments[7] >= pwm_counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5]) begin
       led_out[7] <= 1'b1;
     end else
       led_out[7] <= 1'b0;
@@ -127,14 +127,14 @@ module user_module_341063825089364563(
       segments[7] <= segments[7] >> 1;
 
     case(state)
-      3'b000 : segments[0] <= 6'b111111;
-      3'b001 : segments[1] <= 6'b111111;
-      3'b010 : segments[6] <= 6'b111111;
-      3'b011 : segments[4] <= 6'b111111;
-      3'b100 : segments[3] <= 6'b111111;
-      3'b101 : segments[2] <= 6'b111111;
-      3'b110 : segments[6] <= 6'b111111;
-      3'b111 : segments[5] <= 6'b111111;
+      3'b000 : segments[0] <= 5'b11111;
+      3'b001 : segments[1] <= 5'b11111;
+      3'b010 : segments[6] <= 5'b11111;
+      3'b011 : segments[4] <= 5'b11111;
+      3'b100 : segments[3] <= 5'b11111;
+      3'b101 : segments[2] <= 5'b11111;
+      3'b110 : segments[6] <= 5'b11111;
+      3'b111 : segments[5] <= 5'b11111;
     endcase
   end
 
