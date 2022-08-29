@@ -23,7 +23,6 @@ module user_module_341063825089364563(
   reg direction = 0;
   reg [4:0] segments [6:0];
   reg [1:0] fade_speed = 2'b11;
-  reg [6:0] segments_processed;
   reg [FADE_COUNTER_WIDTH-1:0] fade_counter = 0;
   reg [PWM_COUNTER_WIDTH-1:0] pwm_counter = 0;
   wire [4:0] pwm_counter_slice;
