@@ -18,12 +18,12 @@ module user_module_341063825089364563(
 
   reg [2:0] counter_speed_prefix;
   reg direction;
-  reg tail = 1;
-  reg led_invert = 1;
-  reg [2:0] state = 3'b000;
+  reg tail;
+  reg led_invert;
+  reg [2:0] state;
   reg [6:0] led_out;
   reg [FADE_WIDTH-1:0] segments [6:0];
-  reg [COUNTER_WIDTH-1:0] counter = 0; // XXX: What is the clk freq for TT?
+  reg [COUNTER_WIDTH-1:0] counter; // XXX: What is the clk freq for TT?
   wire [FADE_COUNTER_WIDTH-1:0] fade_counter;
   wire [4:0] pwm_counter_slice;
   wire [COUNTER_WIDTH-1:0] counter_speed;
