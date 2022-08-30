@@ -7,7 +7,7 @@ module user_module_341063825089364563(
 );
   parameter COUNTER_WIDTH = 22;
   parameter FADE_COUNTER_WIDTH = 22;
-  parameter FADE_WIDTH = 5;
+  parameter FADE_WIDTH = 4;
   parameter PWM_COUNTER_WIDTH = 11;
   parameter COMMON_ANODE = 1;
 
