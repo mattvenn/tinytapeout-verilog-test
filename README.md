@@ -10,7 +10,7 @@ Itty bitty digital IO expander for Tiny Tapeout. TinyIO has seven outputs and th
 ## Pinout
 
 | Pin         | Name    | Function               |
---------------------------------------------------
+|-------------|---------|------------------------|
 | `io_in[0]`  | `clk`   | Logic clock            |
 | `io_in[1]`  | `reset` | Logic reset (positive) |
 | `io_in[2]`  | `sclk`  | SPI clock (negative)   |
@@ -19,7 +19,6 @@ Itty bitty digital IO expander for Tiny Tapeout. TinyIO has seven outputs and th
 | `io_in[5]`  | `in0`   | Digital input          |
 | `io_in[6]`  | `in1`   | Digital input          |
 | `io_in[7]`  | `in2`   | Digital input          |
---------------------------------------------------
 | `io_out[0]` | `out0`  | Digital output         |
 | `io_out[1]` | `out1`  | Digital output         |
 | `io_out[2]` | `out2`  | Digital output         |
