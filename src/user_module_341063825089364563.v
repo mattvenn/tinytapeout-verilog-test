@@ -6,7 +6,6 @@ module user_module_341063825089364563(
   output [7:0] io_out
 );
   parameter COUNTER_WIDTH = 24;
-  parameter FADE_COUNTER_WIDTH = 21;
   parameter PWM_COUNTER_WIDTH = 11;
   parameter COMMON_ANODE = 1;
 
@@ -23,7 +22,6 @@ module user_module_341063825089364563(
   reg direction;
   reg [4:0] segments [6:0];
   reg [1:0] fade_speed = 2'b11;
-  reg [FADE_COUNTER_WIDTH-1:0] fade_counter = 0;
   reg [PWM_COUNTER_WIDTH-1:0] pwm_counter = 0;
   wire [4:0] pwm_counter_slice;
   wire [COUNTER_WIDTH-1:0] counter_speed;
@@ -48,7 +46,6 @@ module user_module_341063825089364563(
         segments[4] <= 5'b00000;
         segments[5] <= 5'b00000;
         segments[6] <= 5'b00000;
-        fade_counter = 0;
         pwm_counter = 0;
     end else begin
       if(counter >= counter_speed) begin
@@ -64,7 +61,6 @@ module user_module_341063825089364563(
         counter <= counter + 1;
       end
       pwm_counter <= pwm_counter + 1;
-      fade_counter <= fade_counter + 1;
     end
 
     led_out[0] <= segments[0] > pwm_counter_slice;
@@ -76,7 +72,7 @@ module user_module_341063825089364563(
     led_out[6] <= segments[6] > pwm_counter_slice;
     led_out[7] <= segments[7] > pwm_counter_slice;
 
-    if(fade_counter == 0)
+    if(counter == 0)
     begin
       segments[0] <= segments[0] >> 1;
       segments[1] <= segments[1] >> 1;
