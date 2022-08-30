@@ -34,7 +34,8 @@ module user_module_341063825089364563(
 
 
   always @(posedge clk) begin
-    counter_speed_prefix <= io_in[4:2] ^ 4'b111;
+    counter_speed_prefix <= io_in[4:2] ^ 3'b111;
+    fade_speed <= io_in[6:5];
     direction <= io_in[7];
   end
 
@@ -75,13 +76,13 @@ module user_module_341063825089364563(
 
     if(fade_counter == 0)
     begin
-      segments[0] <= segments[0] >> 1;
-      segments[1] <= segments[1] >> 1;
-      segments[2] <= segments[2] >> 1;
-      segments[3] <= segments[3] >> 1;
-      segments[4] <= segments[4] >> 1;
-      segments[5] <= segments[5] >> 1;
-      segments[6] <= segments[6] >> 1;
+      segments[0] <= segments[0] >> fade_speed;
+      segments[1] <= segments[1] >> fade_speed;
+      segments[2] <= segments[2] >> fade_speed;
+      segments[3] <= segments[3] >> fade_speed;
+      segments[4] <= segments[4] >> fade_speed;
+      segments[5] <= segments[5] >> fade_speed;
+      segments[6] <= segments[6] >> fade_speed;
     end
 
     case(state)
