@@ -2,7 +2,7 @@
 set script_dir [file dirname [file normalize [info script]]]
 
 # has to match the module name from wokwi
-set ::env(DESIGN_NAME) scan_wrapper_USER_MODULE_ID
+set ::env(DESIGN_NAME) scan_wrapper_341432284947153491
 
 # save some time
 set ::env(RUN_KLAYOUT_XOR) 0
