@@ -16,7 +16,7 @@ module user_module_341449297858921043(
 
   anfsqrt_sqrt_341449297858921043 sqrt_core(
     .clk(io_in[0]),
-    .query(io_in[7:1])   
+    .query(io_in[7:1]),
     .result(io_out[6:0])
   );
 
