@@ -59,7 +59,7 @@ module user_module_341063825089364563(
           state <= state + 3'b001;
         else
           if(state == 3'b000)
-            state = 3'b111;
+            state <= 3'b111;
           else
             state <= state - 3'b001;
       end else begin
