@@ -71,7 +71,6 @@ module user_module_341063825089364563(
     led_out[4] <= segments[4] > pwm_counter_slice;
     led_out[5] <= segments[5] > pwm_counter_slice;
     led_out[6] <= segments[6] > pwm_counter_slice;
-    led_out[7] <= segments[7] > pwm_counter_slice;
 
     if(fade_counter == 0)
     begin
@@ -82,7 +81,6 @@ module user_module_341063825089364563(
       segments[4] <= segments[4] >> 1;
       segments[5] <= segments[5] >> 1;
       segments[6] <= segments[6] >> 1;
-      segments[7] <= segments[7] >> 1;
     end
 
     case(state)
