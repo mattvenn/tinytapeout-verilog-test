@@ -10,17 +10,17 @@ module user_module_341360223723717202(
   assign clk = io_in[0];
   wire reset;
   assign reset = io_in[1];
-  wire[3:0] mem_in;
-  assign mem_in = io_in[7:4];
+  wire[5:0] mem_in;
+  assign mem_in = io_in[7:2];
 
-  reg[3:0] reg_a;
-  reg[3:0] reg_b;
-  reg[3:0] pc;
+  reg[5:0] reg_a;
+  reg[5:0] reg_b;
+  reg[5:0] pc;
+  reg[5:0] instr;
+  reg[5:0] mem_request;
   reg[1:0] micro_pc;
-  reg[3:0] instr;
-  reg[3:0] mem_request;
 
-  assign io_out = { reg_a, mem_request };
+  assign io_out = { 4'b0000, mem_request };
 
   always @(posedge clk) begin
     if (reset) begin

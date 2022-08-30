@@ -14,7 +14,7 @@ initial begin
 end
 
 initial begin
-   #2000;
+   #8000;
    $display("Caught by trap");
    $finish;
  end
@@ -40,13 +40,13 @@ end
 always begin
   // external memory
   //case(io_out[3:0])
-  case(io_out[3:0])
-    0: io_in[7:4] <= 1;
-    1: io_in[7:4] <= 2;
-    2: io_in[7:4] <= 4; // jmp if a == 0
-    3: io_in[7:4] <= 0; // ... to address
-    4: io_in[7:4] <= 3; // jmp
-    5: io_in[7:4] <= 4; // ... to address
+  case(io_out[5:0])
+    0: io_in[7:2] <= 1; // a = a + b
+    1: io_in[7:2] <= 2; // swap a,b
+    2: io_in[7:2] <= 4; // jmp if a == 0
+    3: io_in[7:2] <= 0; // ... to address
+    4: io_in[7:2] <= 3; // jmp
+    5: io_in[7:2] <= 4; // ... to address
     default: io_in[7:4] <= 15;
   endcase
   #1;
