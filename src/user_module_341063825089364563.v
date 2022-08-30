@@ -19,7 +19,7 @@ module user_module_341063825089364563(
   reg [COUNTER_WIDTH-1:0] counter = 0; // XXX: What is the clk freq for TT?
   reg [2:0] counter_speed_prefix;
   reg [2:0] state = 3'b000;
-  reg [7:0] led_out;
+  reg [6:0] led_out;
   reg direction;
   reg [4:0] segments [6:0];
   reg [1:0] fade_speed = 2'b11;
@@ -41,7 +41,7 @@ module user_module_341063825089364563(
     if(reset) begin
         counter <= 0;
         state <= 0;
-        led_out <= 8'b00000000;
+        led_out <= 7'b0000000;
         segments[0] <= 5'b00000;
         segments[1] <= 5'b00000;
         segments[2] <= 5'b00000;
@@ -97,8 +97,8 @@ module user_module_341063825089364563(
 
   generate
     if(COMMON_ANODE)
-      assign io_out = led_out ^ 8'b11111111;
+      assign io_out = {1, led_out ^ 7'b1111111};
     else
-      assign io_out = led_out;
+      assign io_out = {0, led_out};
   endgenerate
 endmodule
