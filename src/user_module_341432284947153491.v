@@ -92,13 +92,8 @@ module spi_341432284947153491 #(
 	negedge_341432284947153491 pe_ne(.clk(clk), .in(ce), .nedge(ce_negedge));
 
 	always @(negedge sclk) begin
-		if (ce) begin
-			inbuf <= 0;
-			outlatch <= 0;
-		end else begin
-			// shift in
-			inbuf <= { inbuf[OUTBITS-2:0], sin };
-		end
+		// shift in
+		inbuf <= { inbuf[OUTBITS-2:0], sin };
 	end
 
 	always @(posedge sclk) begin
@@ -112,6 +107,9 @@ module spi_341432284947153491 #(
 		if (reset) begin
 			inbuf <= 0;
 			inlatch <= 0;
+			outlatch <= 0;
+		end else if (ce) begin
+			inbuf <= 0;
 			outlatch <= 0;
 		end else begin
 			if (ce_posedge) begin
