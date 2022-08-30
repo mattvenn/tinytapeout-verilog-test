@@ -5,22 +5,12 @@
 //  although (if one is present) it is recommended to place a clock on io_in[0].
 //  This allows use of the internal clock divider if you wish.
 module user_module_341446083683025490(
-  input [7:0] io_in, 
-  output [7:0] io_out
+  input  wire [7:0] io_in, 
+  output wire [7:0] io_out
 );
 
-  wire pdm_out;
 
-  assign io_out[0] = pdm_out;
-  assign io_out[1] = ~pdm_out;
 
-  pdm_341446083683025490 pdm_core(
-    .pdm_input(io_in[7:3]),
-    .write_en(io_in[2]),
-    .reset(io_in[1]),
-    .clk(io_in[0]),    
-    .pdm_out(pdm_out)
-  );
 
 endmodule
 
@@ -28,29 +18,61 @@ endmodule
 //  so they are copied into the main TinyTapeout repo.
 //  Appending your ID to any submodules you create 
 //  ensures there are no clashes in full-chip simulation.
-module pdm_341446083683025490(
-    input [4:0] pdm_input,
-    input       write_en,
-    input       clk, reset,    
-    output      pdm_out
-);
 
-reg [4:0] accumulator;
-reg [4:0] input_reg;
+module top_341446083683025490
+    (
+    input  wire       i_clk,
+    input  wire       i_rst,
+      
+    input  wire       i_roll,
+       
+    input  wire       i_load,
+    input  wire [2:0] i_seed,
 
-wire [5:0] sum;
+    output wire [7:0] o_led
+    );
 
-assign sum = input_reg + accumulator;
-assign pdm_out = sum[5];
+    reg lfsr_en;
 
-always @(posedge clk or posedge reset) begin
-    if (reset) begin 
-        input_reg <= 5'h00 ;
-        accumulator <= 5'h00;
-    end else begin
-        accumulator <= sum[4:0];
-        if (write_en) input_reg <= pdm_input ;
-    end
-end
+    lfsr_341446083683025490 lfsr_i (
+        .i_clk  (i_clk),
+        .i_rst  (i_rst),
+        .i_en   (lfsr_en),
+        //
+        .i_load (i_load),
+        .i_seed (i_seed),
+        //
+        .o_lfsr ()
+    );
+
+endmodule
+
+module lfsr_341446083683025490
+    (
+    input  wire       i_clk,
+    input  wire       i_rst,
+    input  wire       i_en,
+
+    input  wire       i_load,
+    input  wire [2:0] i_seed,
+    
+    output reg  [2:0] o_lfsr
+    );
+
+    always@(posedge i_clk) begin 
+        if(i_rst) begin 
+            o_lfsr <= 0;
+        end 
+        else if(i_en) begin 
+            if(i_load) begin 
+                o_lfsr <= i_seed;
+            end 
+            else begin 
+                o_lfsr[0] <= o_lfsr[1] ^ o_lfsr[2];
+                o_lfsr[1] <= o_lfsr[0];
+                o_lfsr[2] <= o_lfsr[1];
+            end 
+        end 
+    end 
 
 endmodule
