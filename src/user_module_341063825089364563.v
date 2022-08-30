@@ -23,7 +23,7 @@ module user_module_341063825089364563(
   reg [6:0] led_out;
   reg direction;
   reg [FADE_WIDTH-1:0] segments [6:0];
-  reg [1:0] fade_speed = 2'b11;
+  reg tail = 1;
   wire [FADE_COUNTER_WIDTH-1:0] fade_counter;
   wire [4:0] pwm_counter_slice;
   wire [COUNTER_WIDTH-1:0] counter_speed;
@@ -35,8 +35,8 @@ module user_module_341063825089364563(
 
   always @(posedge clk) begin
     counter_speed_prefix <= io_in[4:2] ^ 3'b111;
-    fade_speed <= io_in[6:5];
-    direction <= io_in[7];
+    tail <= io_in[5];
+    direction <= io_in[6];
   end
 
   always @(posedge clk) begin
@@ -74,15 +74,26 @@ module user_module_341063825089364563(
     led_out[5] <= segments[5] > pwm_counter_slice;
     led_out[6] <= segments[6] > pwm_counter_slice;
 
-    if(fade_counter == 0)
+    if(tail)
     begin
-      segments[0] <= segments[0] >> fade_speed;
-      segments[1] <= segments[1] >> fade_speed;
-      segments[2] <= segments[2] >> fade_speed;
-      segments[3] <= segments[3] >> fade_speed;
-      segments[4] <= segments[4] >> fade_speed;
-      segments[5] <= segments[5] >> fade_speed;
-      segments[6] <= segments[6] >> fade_speed;
+      if(fade_counter == 0)
+      begin
+        segments[0] <= segments[0] >> 1;
+        segments[1] <= segments[1] >> 1;
+        segments[2] <= segments[2] >> 1;
+        segments[3] <= segments[3] >> 1;
+        segments[4] <= segments[4] >> 1;
+        segments[5] <= segments[5] >> 1;
+        segments[6] <= segments[6] >> 1;
+      end
+    end else begin
+      segments[0] <= 1'b0000;
+      segments[1] <= 1'b0000;
+      segments[2] <= 1'b0000;
+      segments[3] <= 1'b0000;
+      segments[4] <= 1'b0000;
+      segments[5] <= 1'b0000;
+      segments[6] <= 1'b0000;
     end
 
     case(state)
