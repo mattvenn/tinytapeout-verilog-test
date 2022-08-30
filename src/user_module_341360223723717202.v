@@ -34,13 +34,16 @@ module user_module_341360223723717202(
       micro_pc <= micro_pc + 1;
       if (micro_pc == 0) begin
         mem_request <= pc;
+        pc <= pc + 1;
       end else if (micro_pc == 1) begin
         instr <= mem_in;
       end else if (micro_pc == 2) begin
         if (instr == 1) reg_a <= reg_a + reg_b;
-        if (instr == 2) begin reg_a <= reg_b; reg_b <= reg_a; end
+        else if (instr == 2) begin reg_a <= reg_b; reg_b <= reg_a; end
+        else if (instr == 3 || instr == 4) begin mem_request <= pc; end
       end else if (micro_pc == 3) begin
-        pc <= pc + 1;
+        if (instr == 3) begin pc <= mem_in; end
+        else if (instr == 4 && reg_a != 0) begin pc <= mem_in; end
       end
     end
   end

@@ -40,9 +40,13 @@ end
 always begin
   // external memory
   //case(io_out[3:0])
-  case(io_out[0])
+  case(io_out[3:0])
     0: io_in[7:4] <= 1;
     1: io_in[7:4] <= 2;
+    2: io_in[7:4] <= 4; // jmp if a == 0
+    3: io_in[7:4] <= 0; // ... to address
+    4: io_in[7:4] <= 3; // jmp
+    5: io_in[7:4] <= 4; // ... to address
     default: io_in[7:4] <= 15;
   endcase
   #1;
