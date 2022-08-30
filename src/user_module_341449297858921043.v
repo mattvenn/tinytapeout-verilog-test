@@ -90,7 +90,7 @@ module anfsqrt_sqrt_341449297858921043(
 	wire [6:0] res_next;
 	wire [6:0] eps_next;
 
-	anfsqrt_sqrtiu iterator(.prev_att(att),
+	anfsqrt_sqrtiu_341449297858921043 iterator(.prev_att(att),
 						.prev_eps(eps), 
 						.prev_res(res),
 						.this_att(att_next),
