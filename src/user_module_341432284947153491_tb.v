@@ -43,7 +43,7 @@ begin
     reset = 0;
 end
 
-parameter SCLK_HALF_PERIOD = 10;
+parameter SCLK_HALF_PERIOD = 53;
 parameter STCLK = 2*CLK_HALF_PERIOD;
 
 initial begin
@@ -53,9 +53,10 @@ initial begin
 	in1 = 0;
 	in2 = 1;
 	sin = 0;
-	#60
+	#58
 	ce = 0;
 
+	#(TCLK)
 	// 0
 	sclk = 0;
 	sin = 1;
@@ -112,17 +113,9 @@ initial begin
 	// sout should be 0
 	#(SCLK_HALF_PERIOD);
 
-	// 7
-	sin = 0;
-	sclk = 0;
-	#(SCLK_HALF_PERIOD);
-	sclk = 1;
-	// sout should be 0
-	#(SCLK_HALF_PERIOD);
-
 	#(2*STCLK);
 	ce = 1;
-	#(2*STCLK);
+	#(8*STCLK);
 
 	$finish;
 end

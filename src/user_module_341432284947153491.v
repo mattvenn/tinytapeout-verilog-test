@@ -89,34 +89,29 @@ module spi_341432284947153491 #(
 
 	wire ce_posedge, ce_negedge;
 	posedge_341432284947153491 pe_ce(.clk(clk), .in(ce), .pedge(ce_posedge));
-	negedge_341432284947153491 pe_ne(.clk(clk), .in(ce), .nedge(ce_negedge));
+	negedge_341432284947153491 ne_ce(.clk(clk), .in(ce), .nedge(ce_negedge));
 
-	always @(negedge sclk) begin
-		// shift in
-		inbuf <= { inbuf[OUTBITS-2:0], sin };
-	end
-
-	always @(posedge sclk) begin
-		if (!ce) begin
-			// shift out
-			outlatch <= { 1'b0, outlatch[INBITS-1:1] };
-		end
-	end
+	wire sclk_posedge, sclk_negedge;
+	posedge_341432284947153491 pe_sclk(.clk(clk), .in(sclk), .pedge(sclk_posedge));
+	negedge_341432284947153491 ne_sclk(.clk(clk), .in(sclk), .nedge(sclk_negedge));
 
 	always @(posedge clk) begin
 		if (reset) begin
 			inbuf <= 0;
 			inlatch <= 0;
 			outlatch <= 0;
-		end else if (ce) begin
-			inbuf <= 0;
-			outlatch <= 0;
+		end else if (ce_posedge) begin
+			inlatch <= inbuf;
+		end else if (ce_negedge) begin
+			outlatch <= inputs;
+		//end else if (ce) begin
+			//inbuf <= 0;
+			//outlatch <= 0;
 		end else begin
-			if (ce_posedge) begin
-				inlatch <= inbuf;
-			end
-			if (ce_negedge) begin
-				outlatch <= inputs;
+			if (sclk_posedge) begin
+				outlatch <= { 1'b0, outlatch[INBITS-1:1] };
+			end else if (sclk_negedge) begin
+				inbuf <= { inbuf[OUTBITS-2:0], sin };
 			end
 		end
 	end
