@@ -1,14 +1,39 @@
 ![](../../workflows/wokwi/badge.svg)
 
 (Original readme for the template repository [here](https://github.com/mattvenn/wokwi-verilog-gds-test/blob/main/README.md))
+Adapted from H-S-S-11's tinytapeout-verilog-test.
 
-This repo is an experiment in using Verilog source files instead of Wokwi diagrams for [TinyTapeout](https://tinytapeout.com), implementing a 5-bit PDM driver.
+# TinyIO
 
-The Verilog flow is:
+Itty bitty digital IO expander for Tiny Tapeout. TinyIO has seven outputs and three inputs accessible via a SPI interface.
 
-1) Fork this Repo
-2) Create a [wokwi](https://wokwi.com/projects/339800239192932947) project to get an ID
-3) Update WOWKI_PROJECT_ID in Makefile
-4) `grep -rl "341154068332282450" ./src | sed -i "s/341154068332282450/YOUR_WOKWI_ID/g"` from the top of the repo to find and replace all occurences of the old ID in `src` with yours, and rename the `user_module`, `user_module_tb` and `scan_wrapper` files to use your ID
-5) Replace behavioural code in user_module_ID.v with your own, likewise change the testbench
-6) Push changes, which triggers the GitHub Action to build the project
+## Pinout
+
+| Pin         | Name    | Function               |
+--------------------------------------------------
+| `io_in[0]`  | `clk`   | Logic clock            |
+| `io_in[1]`  | `reset` | Logic reset (positive) |
+| `io_in[2]`  | `sclk`  | SPI clock (negative)   |
+| `io_in[3]`  | `ce`    | SPI chip enable (neg.) |
+| `io_in[4]`  | `sin`   | SPI in (-->chip)       |
+| `io_in[5]`  | `in0`   | Digital input          |
+| `io_in[6]`  | `in1`   | Digital input          |
+| `io_in[7]`  | `in2`   | Digital input          |
+--------------------------------------------------
+| `io_out[0]` | `out0`  | Digital output         |
+| `io_out[1]` | `out1`  | Digital output         |
+| `io_out[2]` | `out2`  | Digital output         |
+| `io_out[3]` | `out3`  | Digital output         |
+| `io_out[4]` | `out4`  | Digital output         |
+| `io_out[5]` | `out5`  | Digital output         |
+| `io_out[6]` | `out6`  | Digital output         |
+| `io_out[7]` | `sout`  | SPI out (<--chip)      |
+
+## Interface
+
+Outputs are shifted in MSB first. `sin` is sampled on the falling edge of `sclk`. `sout` is set on the rising edge of `sckl`.
+Inputs are latched on the falling edge of `ce`. Outputs are latched on the rising edge of `ce`.
+
+Notes:
+* Wait one `clk` cycle after deasserting `ce` before asserting `sclk`.
+* `sclk` should not be higher frequency than `clk`.
