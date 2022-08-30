@@ -40,10 +40,11 @@ module user_module_341360223723717202(
       end else if (micro_pc == 2) begin
         if (instr == 1) reg_a <= reg_a + reg_b;
         else if (instr == 2) begin reg_a <= reg_b; reg_b <= reg_a; end
-        else if (instr == 3 || instr == 4) begin mem_request <= pc; end
+        else if (instr == 3 || instr == 4 || instr == 5) begin mem_request <= pc; end
       end else if (micro_pc == 3) begin
         if (instr == 3) begin pc <= mem_in; end
         else if (instr == 4 && reg_a != 0) begin pc <= mem_in; end
+        else if (instr == 5) begin reg_a <= mem_in; end
       end
     end
   end

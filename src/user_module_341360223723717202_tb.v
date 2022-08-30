@@ -45,8 +45,10 @@ always begin
     1: io_in[7:2] <= 2; // swap a,b
     2: io_in[7:2] <= 4; // jmp if a == 0
     3: io_in[7:2] <= 0; // ... to address
-    4: io_in[7:2] <= 3; // jmp
-    5: io_in[7:2] <= 4; // ... to address
+    4: io_in[7:2] <= 5; // read immediate into a
+    5: io_in[7:2] <= 63;// ...
+    6: io_in[7:2] <= 3; // jmp
+    7: io_in[7:2] <= 6; // ... to address
     default: io_in[7:4] <= 15;
   endcase
   #1;
