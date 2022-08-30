@@ -6,7 +6,8 @@ module user_module_341063825089364563(
   output [7:0] io_out
 );
   parameter COUNTER_WIDTH = 22;
-  parameter FADE_COUNTER_WIDTH = 20;
+  parameter FADE_COUNTER_WIDTH = 22;
+  parameter FADE_WIDTH = 5;
   parameter PWM_COUNTER_WIDTH = 11;
   parameter COMMON_ANODE = 1;
 
@@ -21,7 +22,7 @@ module user_module_341063825089364563(
   reg [2:0] state = 3'b000;
   reg [6:0] led_out;
   reg direction;
-  reg [4:0] segments [6:0];
+  reg [FADE_WIDTH-1:0] segments [6:0];
   reg [1:0] fade_speed = 2'b11;
   wire [FADE_COUNTER_WIDTH-1:0] fade_counter;
   wire [4:0] pwm_counter_slice;
@@ -42,13 +43,13 @@ module user_module_341063825089364563(
         counter <= 0;
         state <= 0;
         led_out <= 7'b0000000;
-        segments[0] <= 5'b00000;
-        segments[1] <= 5'b00000;
-        segments[2] <= 5'b00000;
-        segments[3] <= 5'b00000;
-        segments[4] <= 5'b00000;
-        segments[5] <= 5'b00000;
-        segments[6] <= 5'b00000;
+        segments[0] <= {FADE_WIDTH-1{1'b0}};
+        segments[1] <= {FADE_WIDTH-1{1'b0}};
+        segments[2] <= {FADE_WIDTH-1{1'b0}};
+        segments[3] <= {FADE_WIDTH-1{1'b0}};
+        segments[4] <= {FADE_WIDTH-1{1'b0}};
+        segments[5] <= {FADE_WIDTH-1{1'b0}};
+        segments[6] <= {FADE_WIDTH-1{1'b0}};
     end else begin
       if(counter >= counter_speed) begin
         counter <= 0;
@@ -84,14 +85,14 @@ module user_module_341063825089364563(
     end
 
     case(state)
-      3'b000 : segments[0] <= 5'b11111;
-      3'b001 : segments[1] <= 5'b11111;
-      3'b010 : segments[6] <= 5'b11111;
-      3'b011 : segments[4] <= 5'b11111;
-      3'b100 : segments[3] <= 5'b11111;
-      3'b101 : segments[2] <= 5'b11111;
-      3'b110 : segments[6] <= 5'b11111;
-      3'b111 : segments[5] <= 5'b11111;
+      3'b000 : segments[0] <= {FADE_WIDTH-1{1'b1}};
+      3'b001 : segments[1] <= {FADE_WIDTH-1{1'b1}};
+      3'b010 : segments[6] <= {FADE_WIDTH-1{1'b1}};
+      3'b011 : segments[4] <= {FADE_WIDTH-1{1'b1}};
+      3'b100 : segments[3] <= {FADE_WIDTH-1{1'b1}};
+      3'b101 : segments[2] <= {FADE_WIDTH-1{1'b1}};
+      3'b110 : segments[6] <= {FADE_WIDTH-1{1'b1}};
+      3'b111 : segments[5] <= {FADE_WIDTH-1{1'b1}};
     endcase
   end
 
