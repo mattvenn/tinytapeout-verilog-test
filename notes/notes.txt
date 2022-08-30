@@ -1,0 +1,16 @@
+Seven Segment Decoder 
+
+Inputs:
+    Clock
+    Reset
+    [3:0] BCD 
+    [1:0] Tail Length  
+
+Outputs
+    [7:0] LED
+
+
+
+
+
+
