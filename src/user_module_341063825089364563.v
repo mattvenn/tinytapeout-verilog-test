@@ -9,7 +9,6 @@ module user_module_341063825089364563(
   parameter FADE_COUNTER_WIDTH = 22;
   parameter FADE_WIDTH = 4;
   parameter PWM_COUNTER_WIDTH = 11;
-  parameter COMMON_ANODE = 1;
 
   // using io_in[0] as clk, io_in[1] as reset
   wire clk;
@@ -20,6 +19,7 @@ module user_module_341063825089364563(
   reg [2:0] counter_speed_prefix;
   reg direction;
   reg tail = 1;
+  reg led_invert = 1;
   reg [2:0] state = 3'b000;
   reg [6:0] led_out;
   reg [FADE_WIDTH-1:0] segments [6:0];
@@ -31,12 +31,13 @@ module user_module_341063825089364563(
   assign pwm_counter_slice = counter[PWM_COUNTER_WIDTH-4:PWM_COUNTER_WIDTH-4-5];
   assign counter_speed = {counter_speed_prefix, {COUNTER_WIDTH-1-3{1'b1}}};
   assign fade_counter = counter[FADE_COUNTER_WIDTH-1:0];
-
+  assign io_out = {0, led_out} ^ {8{led_invert}};
 
   always @(posedge clk) begin
     counter_speed_prefix <= io_in[4:2] ^ 3'b111;
     tail <= io_in[5];
     direction <= io_in[6];
+    led_invert <= io_in[7];
   end
 
   always @(posedge clk) begin
@@ -106,11 +107,4 @@ module user_module_341063825089364563(
       3'b111 : segments[5] <= {FADE_WIDTH-1{1'b1}};
     endcase
   end
-
-  generate
-    if(COMMON_ANODE)
-      assign io_out = {1, led_out ^ 7'b1111111};
-    else
-      assign io_out = {0, led_out};
-  endgenerate
 endmodule

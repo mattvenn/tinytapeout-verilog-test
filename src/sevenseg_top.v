@@ -21,7 +21,6 @@ assign io_in_x[5] = io_in[5];
 assign io_in_x[6] = io_in[6];
 assign io_in_x[7] = io_in[7];
 
-defparam mod1.COMMON_ANODE = 0;
 user_module_341063825089364563 mod1(.io_in(io_in_x), .io_out(io_out));
 
 endmodule
