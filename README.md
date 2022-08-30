@@ -33,6 +33,8 @@ Itty bitty digital IO expander for Tiny Tapeout. TinyIO has seven outputs and th
 Outputs are shifted in MSB first. `sin` is sampled on the falling edge of `sclk`. `sout` is set on the rising edge of `sckl`.
 Inputs are latched on the falling edge of `ce`. Outputs are latched on the rising edge of `ce`.
 
+![Alt](https://svg.wavedrom.com/github/AidanMedcalf/tinytapeout-tinyio/main/diagram/tinyio-spi.json5)
+
 Notes:
 * Wait one `clk` cycle after deasserting `ce` before asserting `sclk`.
 * `sclk` should not be higher frequency than `clk`.
