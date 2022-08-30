@@ -39,20 +39,23 @@ end
 
 always begin
   // external memory
-  //case(io_out[3:0])
   case(io_out[5:0])
     0: io_in[7:2] <= 1; // a = a + b
     1: io_in[7:2] <= 2; // swap a,b
-    2: io_in[7:2] <= 4; // jmp if a == 0
-    3: io_in[7:2] <= 0; // ... to address
-    4: io_in[7:2] <= 5; // read immediate into a
-    5: io_in[7:2] <= 63;// ...
-    6: io_in[7:2] <= 3; // jmp
-    7: io_in[7:2] <= 6; // ... to address
+    2: io_in[7:2] <= 16;// output a
+    3: io_in[7:2] <= 4; // jmp if a == 0
+    4: io_in[7:2] <= 0; // ... to address
+    5: io_in[7:2] <= 5; // read immediate into a
+    6: io_in[7:2] <= 63;// ...
+    7: io_in[7:2] <= 3; // jmp
+    8: io_in[7:2] <= 7; // ... to address
     default: io_in[7:4] <= 15;
   endcase
+
   #1;
 end
+
+always @(posedge io_out[7]) $display("OUT: ", io_out[5:0]);
 
 initial begin
   $monitor(

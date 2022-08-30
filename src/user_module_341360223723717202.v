@@ -19,8 +19,10 @@ module user_module_341360223723717202(
   reg[5:0] instr;
   reg[5:0] mem_request;
   reg[1:0] micro_pc;
+  reg ctrl_output_a;
 
-  assign io_out = { 4'b0000, mem_request };
+  assign io_out = ctrl_output_a ? { 2'b10, reg_a }
+                                : { 4'b0000, mem_request };
 
   always @(posedge clk) begin
     if (reset) begin
@@ -30,6 +32,7 @@ module user_module_341360223723717202(
       micro_pc <= 0;
       instr <= 0;
       mem_request <= 0;
+      ctrl_output_a <= 0;
     end else begin
       micro_pc <= micro_pc + 1;
       if (micro_pc == 0) begin
@@ -41,10 +44,12 @@ module user_module_341360223723717202(
         if (instr == 1) reg_a <= reg_a + reg_b;
         else if (instr == 2) begin reg_a <= reg_b; reg_b <= reg_a; end
         else if (instr == 3 || instr == 4 || instr == 5) begin mem_request <= pc; end
+        else if (instr == 16) begin ctrl_output_a <= 1; end
       end else if (micro_pc == 3) begin
         if (instr == 3) begin pc <= mem_in; end
         else if (instr == 4 && reg_a != 0) begin pc <= mem_in; end
         else if (instr == 5) begin reg_a <= mem_in; end
+        else if (instr == 16) begin ctrl_output_a <= 0; end
       end
     end
   end
