@@ -44,7 +44,7 @@ module user_module_341063825089364563(
     if(reset) begin
         counter <= 0;
         state <= 0;
-        led_out <= 7'b0000000;
+        led_out <= 8'b00000000;
         segments[0] <= {FADE_WIDTH-1{1'b0}};
         segments[1] <= {FADE_WIDTH-1{1'b0}};
         segments[2] <= {FADE_WIDTH-1{1'b0}};
