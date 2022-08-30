@@ -34,7 +34,7 @@ module user_module_341063825089364563(
   assign io_out = {0, led_out} ^ {8{led_invert}};
 
   always @(posedge clk) begin
-    counter_speed_prefix <= io_in[4:2] ^ 3'b111;
+    counter_speed_prefix <= ~io_in[4:2];
     tail <= io_in[5];
     direction <= io_in[6];
     led_invert <= io_in[7];
