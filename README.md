@@ -1,6 +1,11 @@
-(Original readme for the template repository [here](https://github.com/mattvenn/wokwi-verilog-gds-test/blob/main/README.md))
+# 7 Segment Looping Figure Eight for TinyTapeout
 
-This repo is an experiment in using Verilog source files instead of Wokwi diagrams for [TinyTapeout](tinytapeout.com). If you're interested in doing the same, make sure to edit the top level Makefile and replace `WOKWI_PROJECT_ID` with one that you generate so it doesn't clash with this repo.
+![Animated Figure 8](fig8.gif)
 
-Hardware used for testing this demo project is the TinyFPGA BX, install the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build) and issue `make` under `src/` to generate bitstream to load on hardware.
+A small looping figure 8/snake with fading tail for [TinyTapeout](http://tinytapeout.com/). Speed and direction are configurable using the input pins.
 
+Hardware used for testing this demo project is the [iceFUN](https://www.robot-electronics.co.uk/icefun.html) FPGA board. I have been using `apio` to generate bitstream to load on hardware.
+
+---
+
+(Original readme from `omerk`'s repository [here](https://github.com/omerk/tinytapeout-verilog-test/blob/main/README.md))
