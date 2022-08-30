@@ -87,13 +87,13 @@ module user_module_341063825089364563(
         segments[6] <= segments[6] >> 1;
       end
     end else begin
-      segments[0] <= 1'b0000;
-      segments[1] <= 1'b0000;
-      segments[2] <= 1'b0000;
-      segments[3] <= 1'b0000;
-      segments[4] <= 1'b0000;
-      segments[5] <= 1'b0000;
-      segments[6] <= 1'b0000;
+      segments[0] <= 4'b0000;
+      segments[1] <= 4'b0000;
+      segments[2] <= 4'b0000;
+      segments[3] <= 4'b0000;
+      segments[4] <= 4'b0000;
+      segments[5] <= 4'b0000;
+      segments[6] <= 4'b0000;
     end
 
     case(state)
