@@ -6,10 +6,10 @@ module user_module_341431502448362067_tb;
 wire [7:0] io_in;
 wire [7:0] io_out;
 
-reg clk, reset, write_en;
-reg [4:0] pdm_input;
+reg [4:0] op;
+reg clk, rstn, en;
 
-assign io_in = {pdm_input, write_en, reset, clk};
+assign io_in = {op, a, b, rstn, clk};
 
 user_module_341431502448362067 UUT (.io_in(io_in), .io_out(io_out));
 
@@ -33,34 +33,32 @@ always begin
     #(CLK_HALF_PERIOD);
 end
 
-initial 
+initial
 begin
-    #20
-    reset = 1;
-    #(CLK_HALF_PERIOD);
-    reset = 0;
+    #(TCLK);
+    rstn <= 0;
+    #(TCLK);
+    rstn <= 1;
 end
 
 initial begin
-    write_en = 0;
-    pdm_input = 5'h00;
-    #(CLK_HALF_PERIOD);
-    #(5*TCLK)
-    write_en = 1;
-    pdm_input= 5'h08;
-    #(TCLK);
-    write_en = 0;
-    #(63*TCLK);
-    write_en = 1;
-    pdm_input= 5'h1a;
-    #(TCLK);
-    write_en = 0;
-    #(63*TCLK);
-    write_en = 1;
-    pdm_input= 5'h0f;
-    #(64*TCLK);
-    pdm_input= 5'h04;
-    #(64*TCLK);
+    reg [8:0] ap;
+    reg [8:0] bp;
+    reg [8:0] op;
+    ap = $random;
+    bp = $random;
+    en = 1;
+    op = add;
+    for (int i = 0; i < 8; i = i + 1) begin
+        #(TCLK)
+        a[i] = ap[i];
+        b[i] = bp[i];
+        op[i] = io_out[i];
+    end
+
+    #(TCLK)
+    rstn = 1;
+    en = 0;
     $finish;
 end
 

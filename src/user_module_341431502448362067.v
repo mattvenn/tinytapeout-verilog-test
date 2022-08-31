@@ -9,33 +9,67 @@ module user_module_341431502448362067(
     output [7:0] io_out
 );
 
-sreg_341431502448362067 #(.MSB(8)) sreg(
-    .d(io_in[3]),
-    .en(io_in[2]),
+alu_341431502448362067 alu(
+    .op(io_in[7:4]),
+    .a(io_in[3]),
+    .b(io_in[2]),
     .rstn(io_in[1]),
     .clk(io_in[0]),
-    .out(io_out[7:0])
+    .out(io_out[0])
 );
+
 
 endmodule
 
-module sreg_341431502448362067 #(parameter MSB = 8) (
-    input d,
+module alu_341431502448362067 #(parameter MSB = 8) (
+    input [3:0] op,
+    input a,
+    input b,
     input clk,
     input en,
     input rstn,
-    output reg [MSB-1:0] out
+    output reg out
 );
 
+localparam
+    add  = 4'b0001,
+    neg  = 4'b0000,
+    bor  = 4'b1001,
+    bneg = 4'b1000,
+    band = 4'b1010,
+    bxor = 4'b1100;
+
+reg carry;
+
 always @ (posedge clk) begin
-    if (!rstn)
+    if (!rstn) begin
         out <= 0;
-    else begin
-        if (en)
-            out <= {d, out[MSB-1:1]};
-        else
-            out <= out;
-    end
+        carry <= 0;
+    end else
+        case(op)
+        add:
+            if (carry) begin
+                out <= a == b;
+                carry <= a | b;
+            end else begin
+                out <= a ^ b;
+                carry <= a & b;
+            end
+        neg:
+            begin
+                out <= ~a == carry;
+                carry <= ~a | carry;
+            end
+        bor:
+            out <= a | b;
+        bneg:
+            out <= ~a;
+        band:
+            out <= a & b;
+        bxor:
+            out <= a ^ b;
+
+        endcase
 end
 
 endmodule
