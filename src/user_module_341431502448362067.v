@@ -5,51 +5,36 @@
 //  although (if one is present) it is recommended to place a clock on io_in[0].
 //  This allows use of the internal clock divider if you wish.
 module user_module_341431502448362067(
-  input [7:0] io_in, 
-  output [7:0] io_out
+    input [7:0] io_in,
+    output [7:0] io_out
 );
 
-  wire pdm_out;
-
-  assign io_out[0] = pdm_out;
-  assign io_out[1] = ~pdm_out;
-
-  pdm_341431502448362067 pdm_core(
-    .pdm_input(io_in[7:3]),
-    .write_en(io_in[2]),
-    .reset(io_in[1]),
-    .clk(io_in[0]),    
-    .pdm_out(pdm_out)
-  );
+sreg_341431502448362067 #(.MSB(8)) sreg(
+    .d(io_in[3]),
+    .en(io_in[2]),
+    .rstn(io_in[1]),
+    .clk(io_in[0]),
+    .out(io_out[7:0])
+);
 
 endmodule
 
-//  Any submodules should be included in this file,
-//  so they are copied into the main TinyTapeout repo.
-//  Appending your ID to any submodules you create 
-//  ensures there are no clashes in full-chip simulation.
-module pdm_341431502448362067(
-    input [4:0] pdm_input,
-    input       write_en,
-    input       clk, reset,    
-    output      pdm_out
+module sreg_341431502448362067 #(parameter MSB = 8) (
+    input d,
+    input clk,
+    input en,
+    input rstn,
+    output reg [MSB-1:0] out
 );
 
-reg [4:0] accumulator;
-reg [4:0] input_reg;
-
-wire [5:0] sum;
-
-assign sum = input_reg + accumulator;
-assign pdm_out = sum[5];
-
-always @(posedge clk or posedge reset) begin
-    if (reset) begin 
-        input_reg <= 5'h00 ;
-        accumulator <= 5'h00;
-    end else begin
-        accumulator <= sum[4:0];
-        if (write_en) input_reg <= pdm_input ;
+always @ (posedge clk) begin
+    if (!rstn)
+        out <= 0;
+    else begin
+        if (en)
+            out <= {d, out[MSB-1:1]};
+        else
+            out <= out;
     end
 end
 
