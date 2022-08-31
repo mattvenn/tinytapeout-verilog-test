@@ -28,7 +28,7 @@ module user_module_341063825089364563(
   wire [FADE_WIDTH-1:0] pwm_counter_slice;
   wire [COUNTER_WIDTH-1:0] counter_speed;
 
-  assign pwm_counter_slice = counter[PWM_COUNTER_WIDTH-1:PWM_COUNTER_WIDTH-1-FADE_WIDTH-1];
+  assign pwm_counter_slice = counter[PWM_COUNTER_WIDTH-1:PWM_COUNTER_WIDTH-FADE_WIDTH];
   assign counter_speed = {counter_speed_prefix, {COUNTER_WIDTH-1-3{1'b1}}};
   assign fade_counter = counter[FADE_COUNTER_WIDTH-1:0];
   assign io_out = {0, led_out} ^ {8{led_invert}};
