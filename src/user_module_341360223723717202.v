@@ -15,6 +15,7 @@ module user_module_341360223723717202(
 
   reg[5:0] reg_a;
   reg[5:0] reg_b;
+  reg[5:0] reg_c;
   reg[5:0] pc;
   reg[5:0] instr;
   reg[5:0] mem_request;
@@ -28,6 +29,7 @@ module user_module_341360223723717202(
     if (reset) begin
       reg_a <= 1;
       reg_b <= 1;
+      reg_c <= 0;
       pc <= 0;
       micro_pc <= 0;
       instr <= 0;
@@ -43,12 +45,14 @@ module user_module_341360223723717202(
       end else if (micro_pc == 2) begin
         if (instr == 1) reg_a <= reg_a + reg_b;
         else if (instr == 2) begin reg_a <= reg_b; reg_b <= reg_a; end
-        else if (instr == 3 || instr == 4 || instr == 5) begin mem_request <= pc; end
+        else if (instr == 3) begin reg_a <= reg_c; end
+        else if (instr == 4) begin reg_c <= reg_a; end
+        else if (instr == 5 || instr == 6 || instr == 7) begin mem_request <= pc; end
         else if (instr == 16) begin ctrl_output_a <= 1; end
       end else if (micro_pc == 3) begin
-        if (instr == 3) begin pc <= mem_in; end
-        else if (instr == 4 && reg_a != 0) begin pc <= mem_in; end
-        else if (instr == 5) begin reg_a <= mem_in; end
+        if (instr == 5) begin pc <= mem_in; end
+        else if (instr == 6 && reg_a != 0) begin pc <= mem_in; end
+        else if (instr == 7) begin reg_a <= mem_in; end
         else if (instr == 16) begin ctrl_output_a <= 0; end
       end
     end

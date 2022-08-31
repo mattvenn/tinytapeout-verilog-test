@@ -43,12 +43,15 @@ always begin
     0: io_in[7:2] <= 1; // a = a + b
     1: io_in[7:2] <= 2; // swap a,b
     2: io_in[7:2] <= 16;// output a
-    3: io_in[7:2] <= 4; // jmp if a == 0
+    3: io_in[7:2] <= 6; // jmp if a == 0
     4: io_in[7:2] <= 0; // ... to address
-    5: io_in[7:2] <= 5; // read immediate into a
+    5: io_in[7:2] <= 7; // read immediate into a
     6: io_in[7:2] <= 63;// ...
-    7: io_in[7:2] <= 3; // jmp
-    8: io_in[7:2] <= 7; // ... to address
+    7: io_in[7:2] <= 4; // c = a
+    8: io_in[7:2] <= 1; // a = a + b
+    9: io_in[7:2] <= 3; // a = c
+    10:io_in[7:2] <= 5; // jmp
+    11:io_in[7:2] <= 7; // ... to address
     default: io_in[7:4] <= 15;
   endcase
 
@@ -61,6 +64,7 @@ initial begin
   $monitor(
     "a",m.reg_a,"  ",
     "b",m.reg_b,"  ",
+    "c",m.reg_c,"  ",
     "pc",m.pc,"  ",
     "micro",m.micro_pc,"  ",
     "instr",m.instr,"  ",
