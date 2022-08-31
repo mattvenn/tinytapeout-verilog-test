@@ -22,10 +22,10 @@ module ctrl (
     always @(posedge i_clk) begin
         scaler <= scaler + 10'd1;
         if(i_freq) begin
-            if(scaler >= (750-1))
+            if(scaler >= (256-1))
                 scaler <= 9'd0;
         end else begin
-            if(scaler >= (512-1))
+            if(scaler >= (128-1))
                 scaler <= 9'd0;
         end
 
