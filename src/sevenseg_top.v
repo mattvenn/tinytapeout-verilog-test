@@ -18,9 +18,9 @@ fn()
 */
 
 // Source clock: 12000000
-// Target clock: 2500.0
-`define CLOCK_DIVIDER 4800
-`define CLOCK_DIVIDER_WIDTH 13
+// Target clock: 1000.0
+`define CLOCK_DIVIDER 12000
+`define CLOCK_DIVIDER_WIDTH 14
 
 module sevenseg_top (
   input TINY_CLK,

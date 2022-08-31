@@ -5,10 +5,10 @@ module user_module_341063825089364563(
   input [7:0] io_in,
   output [7:0] io_out
 );
-  parameter COUNTER_WIDTH = 11;
-  parameter FADE_COUNTER_WIDTH = 10;
+  parameter COUNTER_WIDTH = 9;
+  parameter FADE_COUNTER_WIDTH = 8;
   parameter FADE_WIDTH = 4;
-  parameter PWM_COUNTER_WIDTH = 6;
+  parameter PWM_COUNTER_WIDTH = 4; // Can't be less than FADE_WIDTH
 
   // using io_in[0] as clk, io_in[1] as reset
   wire clk;
@@ -23,7 +23,7 @@ module user_module_341063825089364563(
   reg [2:0] state;
   reg [6:0] led_out;
   reg [FADE_WIDTH-1:0] segments [6:0];
-  reg [COUNTER_WIDTH-1:0] counter; // XXX: What is the clk freq for TT?
+  reg [COUNTER_WIDTH-1:0] counter;
   wire [FADE_COUNTER_WIDTH-1:0] fade_counter;
   wire [FADE_WIDTH-1:0] pwm_counter_slice;
   wire [COUNTER_WIDTH-1:0] counter_speed;
