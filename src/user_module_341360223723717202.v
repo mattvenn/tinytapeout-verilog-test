@@ -48,6 +48,8 @@ module user_module_341360223723717202(
         else if (instr == 3) begin reg_a <= reg_c; end
         else if (instr == 4) begin reg_c <= reg_a; end
         else if (instr == 5 || instr == 6 || instr == 7) begin mem_request <= pc; end
+        else if (instr == 8) begin reg_a <= reg_a + 1; end
+        else if (instr == 9) begin reg_a <= ~reg_a; end
         else if (instr == 16) begin ctrl_output_a <= 1; end
       end else if (micro_pc == 3) begin
         if (instr == 5) begin pc <= mem_in; end

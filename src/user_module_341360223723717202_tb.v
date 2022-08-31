@@ -50,8 +50,10 @@ always begin
     7: io_in[7:2] <= 4; // c = a
     8: io_in[7:2] <= 1; // a = a + b
     9: io_in[7:2] <= 3; // a = c
-    10:io_in[7:2] <= 5; // jmp
-    11:io_in[7:2] <= 7; // ... to address
+    10:io_in[7:2] <= 9; // a = ~a
+    11:io_in[7:2] <= 8; // a++
+    12:io_in[7:2] <= 5; // jmp
+    13:io_in[7:2] <= 7; // ... to address
     default: io_in[7:4] <= 15;
   endcase
 
