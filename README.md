@@ -1,3 +1,14 @@
+# Fixed-Point SQRT for TinyTapeout
+
+Based on code here https://github.com/UDXS/hdl-vlsi-exprs/tree/master/ASQRT
+
+Copyright (C) 2022 Davit Margarian
+
+Licensed under Apache 2.0
+
+---
+
+
 ![](../../workflows/wokwi/badge.svg)
 
 (Original readme for the template repository [here](https://github.com/mattvenn/wokwi-verilog-gds-test/blob/main/README.md))
