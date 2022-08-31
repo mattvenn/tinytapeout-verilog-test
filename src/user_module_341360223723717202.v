@@ -51,8 +51,10 @@ module user_module_341360223723717202(
         else if (instr == 16) begin ctrl_output_a <= 1; end
       end else if (micro_pc == 3) begin
         if (instr == 5) begin pc <= mem_in; end
-        else if (instr == 6 && reg_a != 0) begin pc <= mem_in; end
-        else if (instr == 7) begin reg_a <= mem_in; end
+        else if (instr == 6) begin
+          if (reg_a != 0) begin pc <= mem_in; end else begin pc <= pc + 1; end
+        end
+        else if (instr == 7) begin reg_a <= mem_in; pc <= pc + 1; end
         else if (instr == 16) begin ctrl_output_a <= 0; end
       end
     end
