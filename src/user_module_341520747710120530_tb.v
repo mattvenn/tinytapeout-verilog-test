@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
-//`include "user_module_341457971277988435.v"
+//`include "user_module_341520747710120530.v"
 
-module user_module_341457971277988435_tb;
+module user_module_341520747710120530_tb;
 
 wire [7:0] io_in;
 wire [7:0] io_out;
@@ -10,11 +10,11 @@ reg clk, reset;
 
 assign io_in = {reset, clk};
 
-user_module_341457971277988435 UUT (.io_in(io_in), .io_out(io_out));
+user_module_341520747710120530 UUT (.io_in(io_in), .io_out(io_out));
 
 initial begin
-  $dumpfile("user_module_341457971277988435_tb.vcd");
-  $dumpvars(0, user_module_341457971277988435_tb);
+  $dumpfile("user_module_341520747710120530_tb.vcd");
+  $dumpvars(0, user_module_341520747710120530_tb);
 end
 
 initial begin

@@ -4,7 +4,7 @@
 //  The pin connections within the user_module are up to you,
 //  although (if one is present) it is recommended to place a clock on io_in[0].
 //  This allows use of the internal clock divider if you wish.
-module user_module_341457971277988435(
+module user_module_341520747710120530(
   input [7:0] io_in, 
   output [7:0] io_out
 );
@@ -13,7 +13,7 @@ module user_module_341457971277988435(
 
   assign io_out[0] = uart_tx;
 
-  hello_world_341457971277988435 hello_world(
+  hello_world_341520747710120530 hello_world(
     .clk(io_in[0]),    
     .reset(io_in[1]),
     
@@ -26,7 +26,7 @@ endmodule
 //  so they are copied into the main TinyTapeout repo.
 //  Appending your ID to any submodules you create 
 //  ensures there are no clashes in full-chip simulation.
-module hello_world_341457971277988435 (
+module hello_world_341520747710120530 (
     input clk,
     input reset,
     
