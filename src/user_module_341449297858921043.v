@@ -9,10 +9,13 @@ module user_module_341449297858921043(
 	output [7:0] io_out
 );
 
+	wire [10:0] result;
+	assign io_out = result[7:0];
+
   	anfsqrt_sqrt_341449297858921043 sqrt_core(
 		.clk(io_in[0]),
 		.query({io_in[7:1], 4'b0}),
-		.result(io_out[7:0])
+		.result(result)
   	);
 
 endmodule
@@ -81,13 +84,27 @@ module anfsqrt_sqrt_341449297858921043(
 	reg [10:0] eps;
 	reg [10:0] res;
 
+	wire [10:0] att_mid;
+	wire [10:0] res_mid;
+	wire [10:0] eps_mid;
+
 	wire [10:0] att_next;
 	wire [10:0] res_next;
 	wire [10:0] eps_next;
 
-	anfsqrt_sqrtiu_341449297858921043 iterator(.prev_att(att),
+	anfsqrt_sqrtiu_341449297858921043 iteratorA(
+						.prev_att(att),
 						.prev_eps(eps), 
 						.prev_res(res),
+						.this_att(att_mid),
+						.this_eps(eps_mid),
+						.this_res(res_mid)
+						);
+
+	anfsqrt_sqrtiu_341449297858921043 iteratorB(
+						.prev_att(att_mid),
+						.prev_eps(eps_mid), 
+						.prev_res(res_mid),
 						.this_att(att_next),
 						.this_eps(eps_next),
 						.this_res(res_next)
@@ -96,7 +113,7 @@ module anfsqrt_sqrt_341449297858921043(
 	reg [9:0] iteration;
 	
 	always @(posedge clk) begin
-		if (iteration != 10) begin
+		if (iteration != 3) begin
 				att <= att_next;
 				eps <= eps_next;
 				res <= res_next;
