@@ -5,7 +5,7 @@
 //  although (if one is present) it is recommended to place a clock on io_in[0].
 //  This allows use of the internal clock divider if you wish.
 module user_module_341520747710120530(
-  input [7:0] io_in, 
+  input [7:0] io_in,
   output [7:0] io_out
 );
 
@@ -14,9 +14,9 @@ module user_module_341520747710120530(
   assign io_out[0] = uart_tx;
 
   hello_world_341520747710120530 hello_world(
-    .clk(io_in[0]),    
+    .clk(io_in[0]),
     .reset(io_in[1]),
-    
+
     .uart_tx(uart_tx)
   );
 
@@ -29,10 +29,10 @@ endmodule
 module hello_world_341520747710120530 (
     input clk,
     input reset,
-    
+
     output reg uart_tx
   );
-  
+
   parameter START_BIT = 1'b0;
   parameter STOP_BIT = 1'b1;
   parameter IDLE_BIT = 1'b1;
@@ -42,26 +42,26 @@ module hello_world_341520747710120530 (
 
   reg       [3:0] next_bit_counter; //0 to 10
   reg       [3:0] next_byte_counter; //0 to MSG_LEN (one more than MSG_LEN-1, for one extra idle word length)
-  
+
   parameter FRAME_LENGTH = 11; //bit lengths per word length
-  
+
   parameter MSG_LEN = 13;
   wire [7:0] hello_world_ascii [0:MSG_LEN-1];
-  assign hello_world_ascii[0]  = "H";
-  assign hello_world_ascii[1]  = "e";
-  assign hello_world_ascii[2]  = "l";
-  assign hello_world_ascii[3]  = "l";
-  assign hello_world_ascii[4]  = "o";
-  assign hello_world_ascii[5]  = " ";
-  assign hello_world_ascii[6]  = "W";
-  assign hello_world_ascii[7]  = "o";
-  assign hello_world_ascii[8]  = "r";
-  assign hello_world_ascii[9]  = "l";
-  assign hello_world_ascii[10] = "d";
+  assign hello_world_ascii[0]  = "M";
+  assign hello_world_ascii[1]  = "M";
+  assign hello_world_ascii[2]  = "0";
+  assign hello_world_ascii[3]  = "H";
+  assign hello_world_ascii[4]  = "A";
+  assign hello_world_ascii[5]  = "I";
+  assign hello_world_ascii[6]  = "!";
+  assign hello_world_ascii[7]  = "\n";
+  assign hello_world_ascii[8]  = "n";
+  assign hello_world_ascii[9]  = "y";
+  assign hello_world_ascii[10] = "a";
   assign hello_world_ascii[11] = "!";
   assign hello_world_ascii[12] = "\n";
-  
-  
+
+
   wire [0:FRAME_LENGTH-1] current_frame; //1 + 1 + 8 + 1
     assign current_frame = {
     IDLE_BIT,
@@ -90,7 +90,7 @@ module hello_world_341520747710120530 (
   always @(*) begin
     next_bit_counter = bit_counter;
     next_byte_counter = byte_counter;
-    
+
     if(bit_counter < FRAME_LENGTH-1) begin
       next_bit_counter = bit_counter + 1;
     end else begin
@@ -102,10 +102,10 @@ module hello_world_341520747710120530 (
         next_byte_counter = 0;
       end
     end
-    
+
     uart_tx = IDLE_BIT;
     if(byte_counter != MSG_LEN) begin
-      uart_tx = current_frame[bit_counter];  
+       uart_tx = current_frame[bit_counter];
     end //else leave a blank byte length at the
   end
 
