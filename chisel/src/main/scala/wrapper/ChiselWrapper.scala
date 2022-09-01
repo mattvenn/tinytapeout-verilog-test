@@ -24,6 +24,19 @@ class ChiselWrapper extends RawModule {
   display.io.dot := gcd.io.outputValid
 }
 
+class ChiselWrapperAux extends Module {
+  val io = IO(new Bundle {
+    val data1 = Input(UInt(3.W))
+    val data2 = Input(UInt(3.W))
+    val sw = Input(Bool())
+    val out = Output(UInt(8.W))
+  })
+  val wrapper = Module(new  ChiselWrapper)
+  wrapper.io.in := Cat(io.data2, io.data1,io.sw, this.clock.asBool)
+  io.out := wrapper.io.out
+}
+
+
 object ChiselWrapper extends App {
   println("Generating the ChiselWrapper module Verilog")
   (new chisel3.stage.ChiselStage).emitVerilog(
