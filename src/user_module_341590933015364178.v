@@ -31,7 +31,7 @@ module user_module_341590933015364178(
   assign io_in_filt_2 = 3'b000;
   wire [1:0] io_out_ofmap;
   assign io_out[1:0] = io_out_ofmap;
-  assign io_out[7:2] = 6'b000000
+  assign io_out[7:2] = 6'b000000;
 
 
  // Wire up the FBNA PBC unit
