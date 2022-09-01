@@ -35,7 +35,7 @@ module user_module_341590933015364178(
 
 
  // Wire up the FBNA PBC unit
- fbna_pbc_341590933015364178 PBC   (.clock(clock),
+ fbna_pbc_341590933015364178 PBC   (.clock(clk),
                                     .reset(reset),
                                     .io_shiftin_ifmap(io_shiftin_ifmap),
                                     .io_in_filt_0(io_in_filt_0),
