@@ -37,7 +37,7 @@ module user_module_341457494561784402(
 
     assign io_out = {io_outputValid, io_outputGCD[6:0]} ;
 
-    gcd GCD(
+    GCD gcd(
         .clock(clk),
         .reset(rst),
         .io_value1(io_value1),
