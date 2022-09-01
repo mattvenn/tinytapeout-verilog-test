@@ -31,9 +31,7 @@ jobs:
           cd chisel
           make EmitGCDVerilog
           cd ..
-          echo "" >> src/user_module_341457494561784402.v
           cat chisel/generated/*.v >> src/user_module_341457494561784402.v
-          cat  src/user_module_341457494561784402.v
 
       # caching version seems broken atm
       - name: setup python
