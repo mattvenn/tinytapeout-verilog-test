@@ -14,13 +14,13 @@ class ChiselWrapper extends RawModule {
 
   val display = Module(new DisplayDriver)
   io.out := display.io.out
-  display.io.dot:=io.in(1)
+  display.io.dot := io.in(1)
 
-  val gcd = withClockAndReset(clk.asClock, rst)(Module(new GCD))
-  gcd.io.value1 := io.in(4, 2)
-  gcd.io.value2 := io.in(7, 5)
+  val gcd = withClockAndReset(clk.asClock, rst)(Module(new GCD(width = 4)))
+  gcd.io.value1 := Cat(1.U(1.W), io.in(4, 2))
+  gcd.io.value2 := Cat(0.U(1.W), io.in(7, 5))
   gcd.io.loadingValues := io.in(1)
-  display.io.in  := gcd.io.outputGCD
+  display.io.in := gcd.io.outputGCD
   display.io.dot := gcd.io.outputValid
 }
 
