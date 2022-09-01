@@ -2,7 +2,7 @@
 # and: https://github.com/mattvenn/rgb_mixer/blob/main/Makefile
 
 PROJ = sevenseg_top
-SOURCES= sevenseg_top.v user_module_341457494561784402.v
+SOURCES= sevenseg_top.v user_module_341457494561784402.v GCD.v
 PIN_DEF = pins.pcf
 DEVICE = lp8k
 PACKAGE = cm81
