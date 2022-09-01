@@ -5,8 +5,8 @@ module user_module_341063825089364563(
   input [7:0] io_in,
   output [7:0] io_out
 );
-  parameter COUNTER_WIDTH = 9;
-  parameter FADE_COUNTER_WIDTH = 8;
+  parameter COUNTER_WIDTH = 11;
+  parameter FADE_COUNTER_WIDTH = 10;
   parameter FADE_WIDTH = 4;
   parameter PWM_COUNTER_WIDTH = 4; // Can't be less than FADE_WIDTH
 
