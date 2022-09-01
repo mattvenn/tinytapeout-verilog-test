@@ -1,6 +1,18 @@
+## AES Multiplicative Inverse on Composite Field GF(2^8)
+
+A combinational circuit which receives an 8-bit input and computes multiplicative inverse (8 bits) in GF(2^8) used in AES s-box.
+
+https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+
+https://en.wikipedia.org/wiki/Rijndael_S-box
+
+https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)_finite_field
+
+
+Written in [Chisel](https://www.chisel-lang.org/) and converted to Verilog.
+
+
 (Original readme for the template repository [here](https://github.com/mattvenn/wokwi-verilog-gds-test/blob/main/README.md))
 
-This repo is an experiment in using Verilog source files instead of Wokwi diagrams for [TinyTapeout](tinytapeout.com). If you're interested in doing the same, make sure to edit the top level Makefile and replace `WOKWI_PROJECT_ID` with one that you generate so it doesn't clash with this repo.
 
-Hardware used for testing this demo project is the TinyFPGA BX, install the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build) and issue `make` under `src/` to generate bitstream to load on hardware.
 
