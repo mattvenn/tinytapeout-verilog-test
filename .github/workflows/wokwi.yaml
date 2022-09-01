@@ -29,7 +29,7 @@ jobs:
       - name: Build Chisel module
         run: |
           cd chisel
-          make EmitGCDVerilog
+          make EmitWrapperVerilog
           cd ..
           cat chisel/generated/*.v >> src/user_module_341457494561784402.v
 
