@@ -35,17 +35,17 @@ module user_module_341457494561784402(
     assign io_value1 = {13'b0,io_in[4:3]};
     assign io_value2 = {13'b0,io_in[6:5]};
 
-    assign io_out = {io_outputValid, io_outputGCD[6:0]} 
+    assign io_out = {io_outputValid, io_outputGCD[6:0]} ;
 
- gcd GCD(
-    .clock(clk),
-    .reset(rst),
-    .io_value1(io_value1),
-    .io_value2(io_value2),
-    .io_loadingValues(io_loadingValues),
-    .io_outputGCD(io_outputGCD),
-    .io_outputValid(io_outputValid)
-);
+    gcd GCD(
+        .clock(clk),
+        .reset(rst),
+        .io_value1(io_value1),
+        .io_value2(io_value2),
+        .io_loadingValues(io_loadingValues),
+        .io_outputGCD(io_outputGCD),
+        .io_outputValid(io_outputValid)
+    );
 
 endmodule
 
