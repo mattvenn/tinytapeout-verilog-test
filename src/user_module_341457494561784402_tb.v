@@ -6,7 +6,7 @@
         $finish; \
     end
 
-module user_module_341176884318437971_tb;
+module user_module_341457494561784402_tb;
     // Parameters
     parameter CLK_PERIOD = 10;
 
@@ -15,7 +15,7 @@ module user_module_341176884318437971_tb;
     wire [7:0] io_out;
 
     // DUT
-    user_module_341176884318437971
+    user_module_341457494561784402
     DUT (
         .io_in (io_in),
         .io_out(io_out)
@@ -37,8 +37,8 @@ module user_module_341176884318437971_tb;
 
     // Generate stimuli.
     initial begin
-        $dumpfile("user_module_341176884318437971_tb.vcd");
-        $dumpvars(0, user_module_341176884318437971_tb);
+        $dumpfile("user_module_341457494561784402_tb.vcd");
+        $dumpvars(0, user_module_341457494561784402_tb);
         $timeformat(-6, 2, " us", 16);
 
         // Initial values.
