@@ -31,7 +31,7 @@ jobs:
           cd chisel
           make EmitGCDVerilog
           cd ..
-          cp chisel/generated/* src/
+          cp chisel/generated/*.v src/
 
       # caching version seems broken atm
       - name: setup python
