@@ -1,6 +1,16 @@
-(Original readme for the template repository [here](https://github.com/mattvenn/wokwi-verilog-gds-test/blob/main/README.md))
+# Chisel to ASIC
+Demo project that integrates the Chisel toolchain into the [TinyTapeout](https://tinytapeout.com) GDS generation workflow.
 
-This repo is an experiment in using Verilog source files instead of Wokwi diagrams for [TinyTapeout](tinytapeout.com). If you're interested in doing the same, make sure to edit the top level Makefile and replace `WOKWI_PROJECT_ID` with one that you generate so it doesn't clash with this repo.
 
-Hardware used for testing this demo project is the TinyFPGA BX, install the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build) and issue `make` under `src/` to generate bitstream to load on hardware.
+## Demo
+* Chisel wrapper 
+* 4 bits greatest common divisor
+* Seven segment display driver
+
+## Result
+![Final GDS](gds_render.svg "Final GDS")
+
+Original readme for the template repository [here](https://github.com/mattvenn/wokwi-verilog-gds-test/blob/main/README.md)
+
+Based on [GuzTech/tinytapeout-4x4-multiplier](https://github.com/GuzTech/tinytapeout-4x4-multiplier)
 
