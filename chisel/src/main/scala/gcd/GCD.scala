@@ -9,12 +9,12 @@ import chisel3._
   * Subtracts the smaller from the larger until register y is zero.
   * value in register x is then the GCD
   */
-class GCD extends Module {
+class GCD (width:Int=16) extends Module {
   val io = IO(new Bundle {
-    val value1        = Input(UInt(4.W))
-    val value2        = Input(UInt(4.W))
+    val value1        = Input(UInt(width.W))
+    val value2        = Input(UInt(width.W))
     val loadingValues = Input(Bool())
-    val outputGCD     = Output(UInt(4.W))
+    val outputGCD     = Output(UInt(width.W))
     val outputValid   = Output(Bool())
   })
 
