@@ -9,7 +9,7 @@ A small looping figure 8/snake with fading tail for [TinyTapeout](http://tinytap
                  +-----------+
                  |           |
                  | in    out |     led segment
-    x           -|  0     0  |-      a
+    clk         -|  0     0  |-      a
     reset       -|  1     1  |-      b
     speed lsb   -|  2     2  |-      c
     speed       -|  3     3  |-      d
