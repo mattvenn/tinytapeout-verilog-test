@@ -2,7 +2,7 @@
 set script_dir [file dirname [file normalize [info script]]]
 
 # has to match the module name from wokwi
-set ::env(DESIGN_NAME) scan_wrapper_339800239192932947
+set ::env(DESIGN_NAME) scan_wrapper_3398002391929329472
 
 # save some time
 set ::env(RUN_KLAYOUT_XOR) 0
@@ -19,7 +19,7 @@ set ::env(VERILOG_FILES) [glob $::env(DESIGN_DIR)/*.v]
 
 # absolute die size
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 100 100"
+set ::env(DIE_AREA) "0 0 105 105"
 set ::env(FP_CORE_UTIL) 45
 set ::env(PL_BASIC_PLACEMENT) {1}
 
@@ -32,8 +32,13 @@ set ::env(DECAP_CELL) "\
     sky130_ef_sc_hd__decap_12"
 
 # clock
-set ::env(CLOCK_PERIOD) "100"
-set ::env(CLOCK_PORT) "clk"
+set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PORT) ""
+
+set ::env(BASE_SDC_FILE) $::env(DESIGN_DIR)/base.sdc
+
+set ::env(SYNTH_CLOCK_UNCERTAINITY) 0.20
+set ::env(SYNTH_CLOCK_TRANSITION)   0.15
 
 # don't use power rings or met5
 set ::env(DESIGN_IS_CORE) 0
